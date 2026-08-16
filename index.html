@@ -88,6 +88,7 @@ header{padding:34px 0 20px}
 .sentline{font-family:var(--han);font-size:clamp(21px,5.2vw,31px);line-height:2.9;
   max-width:24ch;display:inline-block;text-align:center}
 .sentline .blank{display:inline-block;min-width:2.3em;border-bottom:3px solid var(--zhu);color:var(--zhu);text-align:center}
+.sentline.listenonly{color:var(--ink-3);font-size:clamp(15px,3.4vw,18px);letter-spacing:.08em}
 .sentline .big{font-family:var(--hanS);font-weight:600;font-size:1.42em;color:var(--ink);line-height:1;display:inline-block;vertical-align:-.06em}
 /* 答完之后：拼音 / 汉字 / 释义 三层叠在例句里 */
 .gwrap{display:inline-flex;align-items:flex-start;gap:3px;vertical-align:middle}
@@ -181,6 +182,59 @@ header{padding:34px 0 20px}
 .ch{font-style:normal;display:inline;transition:color .1s linear}
 .ch.read,.ch.at{color:var(--zhu)}
 .ptip{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin:18px 0 0;padding-top:14px;border-top:1px dashed var(--rule)}
+
+/* ---------- 口语 ---------- */
+.spkbar{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin:0 0 14px}
+.spklist{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.spkchip{font-family:var(--han);font-size:13px;padding:8px 13px;border:1px solid var(--rule);
+  background:var(--panel);border-radius:var(--r);cursor:pointer;color:var(--ink-2);white-space:nowrap}
+.spkchip:hover{border-color:var(--ink)}
+.spkchip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.spkchip .dot{font-family:var(--mono);font-size:10.5px;margin-left:6px;opacity:.75}
+.spkcard{background:var(--panel);border:1px solid var(--rule);border-radius:var(--r);padding:24px 26px 22px}
+@media(max-width:520px){.spkcard{padding:18px 16px}}
+.spkhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 4px}
+.spkhead h3{font-family:var(--hanS);font-size:22px;font-weight:600;margin:0}
+.spkhead .kind{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);border:1px solid var(--rule);padding:2px 8px;border-radius:var(--r)}
+.spknote{font-family:var(--han);font-size:13px;color:var(--ink-3);margin:0 0 16px}
+.spkeg{font-family:var(--han);font-size:clamp(17px,3.8vw,21px);line-height:2;background:var(--paper);
+  border-left:2px solid var(--zhu);border-radius:0 var(--r) var(--r) 0;padding:11px 16px;margin:0 0 18px}
+.spkeg .lbl{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);display:block;letter-spacing:.1em;text-transform:uppercase}
+.pk{color:var(--zhu);font-weight:600;background:linear-gradient(transparent 64%,#F6D9D4 64%);border-radius:2px;padding:0 1px}
+.qrow{display:flex;align-items:center;gap:13px;padding:11px 0;border-top:1px dashed var(--rule)}
+.qrow:first-of-type{border-top:0}
+.qno{font-family:var(--mono);font-size:12px;color:var(--zhu);width:20px;flex-shrink:0}
+.qtxt{flex:1;font-family:var(--han);font-size:clamp(17px,3.8vw,21px);line-height:1.95;min-width:0}
+.qrow .spkicon{width:38px;height:38px;font-size:12px;margin-top:2px}
+.egrow{display:flex;align-items:center;gap:12px}
+.egtxt{flex:1;min-width:0}
+.spkeg .spkicon{width:38px;height:38px;font-size:12px;background:var(--panel);border:1px solid var(--rule);color:var(--ink-2)}
+.spkeg .spkicon:hover{border-color:var(--ink);color:var(--ink)}
+.hints{margin:18px 0 0;padding:14px 16px;border:1px dashed var(--rule);border-radius:var(--r);background:#FAFBFC}
+.hints h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 9px}
+.hints .hl{font-family:var(--han);font-size:13px;color:var(--ink-2);line-height:1.9;margin:0 0 4px}
+.hints .hl b{font-family:var(--hanS);font-size:15px;color:var(--ink)}
+.hints .wtag{display:inline-block;font-family:var(--hanS);font-size:14px;padding:2px 9px;margin:0 4px 4px 0;
+  border:1px solid var(--rule);border-radius:var(--r);background:var(--panel)}
+.spkfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  margin:18px 0 0;padding-top:15px;border-top:1px solid var(--rule)}
+.spkfoot .cnt{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+
+/* 口语专注模式 */
+.focus{text-align:center;padding:14px 0 6px}
+.fhead{font-family:var(--hanS);font-size:19px;font-weight:600;color:var(--ink-2);margin:0 0 16px}
+.feg{display:inline-flex;align-items:center;gap:10px;background:var(--paper);border-radius:var(--r);
+  padding:8px 14px;margin:0 0 26px;font-family:var(--han);font-size:15px;color:var(--ink-2)}
+.feg .spkicon{width:32px;height:32px;font-size:11px;background:var(--panel)}
+.fq{font-family:var(--han);font-size:clamp(26px,6.4vw,40px);line-height:1.75;
+  max-width:20ch;margin:0 auto;min-height:1.75em}
+.playbig2{width:62px;height:62px;border-radius:50%;background:var(--ink);color:#fff;border:0;
+  cursor:pointer;font-size:20px;line-height:1;margin:26px 0 0;box-shadow:0 5px 16px rgba(22,27,38,.22)}
+.playbig2:hover{background:#000}
+.fnav{display:flex;align-items:center;justify-content:center;gap:22px;margin:22px 0 0}
+.fidx{font-family:var(--mono);font-size:14px;color:var(--ink-3);min-width:56px}
+.focus .arrow{font-size:clamp(34px,7vw,46px)}
 
 /* ---------- 学习 ---------- */
 .hint-bar{font-family:var(--han);font-size:13px;color:var(--ink-2);background:var(--panel);
@@ -654,16 +708,17 @@ header{padding:34px 0 20px}
   或者由老师给生词录真人发音，效果比合成音好得多。
 </p>
 <div class="tabs" role="tablist">
-  <button class="tab" role="tab" aria-selected="true" data-p="practice">练习</button>
-  <button class="tab" role="tab" aria-selected="false" data-p="text">课文</button>
+  <button class="tab" role="tab" aria-selected="true" data-p="text">课文</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="speak">口语</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="practice">练习</button>
   <button class="tab" role="tab" aria-selected="false" data-p="browse">学习</button>
   <button class="tab" role="tab" aria-selected="false" data-p="write">写字</button>
   <button class="tab" role="tab" aria-selected="false" data-p="data">我的进度</button>
 </div>
 
-<div class="panel on" id="p-practice"><div class="card" id="qcard"></div></div>
+<div class="panel" id="p-practice"><div class="card" id="qcard"></div></div>
 
-<div class="panel" id="p-text">
+<div class="panel on" id="p-text">
   <div class="tbar">
     <div class="passages" id="passages"></div>
     <div class="tctl">
@@ -678,6 +733,17 @@ header{padding:34px 0 20px}
   </div>
   <div class="passage" id="passage"></div>
   <button class="floatplay" id="txtPlay" aria-label="朗读课文" title="朗读课文">▶</button>
+</div>
+
+<div class="panel" id="p-speak">
+  <div class="spkbar">
+    <div class="spklist" id="spkList"></div>
+    <span style="display:flex;align-items:center;gap:12px">
+      <button class="tb2" id="spkFocusBtn">专注模式</button>
+      <label class="ratelab"><input type="checkbox" id="spkHints" checked> 显示老师提示</label>
+    </span>
+  </div>
+  <div class="spkcard" id="spkCard"></div>
 </div>
 
 <div class="panel" id="p-browse">
@@ -779,13 +845,25 @@ function pyOf(str){
   return out;
 }
 const rbCell=(c,p)=>p?`<ruby>${esc(c)}<rt>${p}</rt></ruby>`:esc(c);
-const ruby=s=>pyOf(s).map(([c,p])=>rbCell(c,p)).join('');
+/* 儿化音是一个音节写成两个字：约定「儿」的拼音留空，
+   渲染时并进前一个字，注音横跨两个字。混血儿的「儿」有自己的音节，不留空。 */
+function rbRun(pairs){
+  const g=[];
+  pairs.forEach(([c,p])=>{
+    if(isHan(c)&&!p&&g.length&&g[g.length-1].p) g[g.length-1].t+=c;
+    else g.push({t:c,p});
+  });
+  return g.map(x=>x.p?`<ruby>${esc(x.t)}<rt>${x.p}</rt></ruby>`:esc(x.t)).join('');
+}
+const ruby=s=>rbRun(pyOf(s));
 /* 标题用：缺一个字的拼音就整体不注音，避免"职业yè"这种半拉注音 */
 function rubyStrict(str,pys){
   if(Array.isArray(pys)&&pys.length===[...str].length)
-    return [...str].map((c,i)=>rbCell(c,pys[i])).join('');
+    return rbRun([...str].map((c,i)=>[c,pys[i]]));
   const cells=pyOf(str);
-  return cells.some(([c,p])=>isHan(c)&&!p) ? esc(str) : cells.map(([c,p])=>rbCell(c,p)).join('');
+  // 缺音的字如果能并进前一个音节（儿化），不算缺
+  const broken=cells.some(([c,p],i)=>isHan(c)&&!p&&!(i>0&&cells[i-1][1]));
+  return broken ? esc(str) : rbRun(cells);
 }
 /* 界面中文：先按界面词表做最长匹配，能查到的整词给拼音+释义；查不到的退回逐字只给拼音 */
 const UIMAX=Math.max(...Object.keys(UIG).map(k=>k.length));
@@ -839,7 +917,7 @@ function rubySent(sent,word,mode,showPy=true){
   if(!segs) return ruby(sent);
   const cell=(txt,wpy,gloss,chars,extra='')=>{
     const inner=showPy
-      ? [...txt].map((c,i)=>rbCell(c,chars[i]||'')).join('')
+      ? rbRun([...txt].map((c,i)=>[c,chars[i]||'']))
       : esc(txt);
     if(!wpy) return esc(txt);
     const en = extra.includes('big') ? '' : esc(gloss||'');
@@ -907,7 +985,7 @@ function annotate(root){
    规格见 提取规格.md，导入前用 validate.py 校验
    ============================================================ */
 const SEED_CATALOG = {"schema":"textbook/1","id":"esc4","title":"轻松学中文 4","title_en":"Easy Steps to Chinese 4","publisher":"北京语言大学出版社","script":"simplified","lessons":[{"no":1,"unit":1,"title":"长相","title_en":"Appearance","title_py":["zhǎng","xiàng"]},{"no":2,"unit":1,"title":"职业","title_en":"Occupations","title_py":["zhí","yè"]},{"no":3,"unit":1,"title":"性格","title_en":"Personality","title_py":["xìng","gé"]},{"no":4,"unit":2,"title":"日常起居","title_en":"Daily Routine","title_py":["rì","cháng","qǐ","jū"]},{"no":5,"unit":2,"title":"家务","title_en":"Household Chores","title_py":["jiā","wù"]},{"no":6,"unit":2,"title":"宠物","title_en":"Pets","title_py":["chǒng","wù"]},{"no":7,"unit":3,"title":"学校","title_en":"Schools","title_py":["xué","xiào"]},{"no":8,"unit":3,"title":"考试","title_en":"Examinations","title_py":["kǎo","shì"]},{"no":9,"unit":3,"title":"学校活动","title_en":"School Events","title_py":["xué","xiào","huó","dòng"]},{"no":10,"unit":4,"title":"美食","title_en":"Delicious Food","title_py":["měi","shí"]},{"no":11,"unit":4,"title":"节日","title_en":"Festivals","title_py":["jié","rì"]},{"no":12,"unit":4,"title":"外出就餐","title_en":"Eating Out","title_py":["wài","chū","jiù","cān"]},{"no":13,"unit":5,"title":"社区","title_en":"Neighbourhood","title_py":["shè","qū"]},{"no":14,"unit":5,"title":"旅游","title_en":"Travelling","title_py":["lǚ","yóu"]},{"no":15,"unit":5,"title":"意外事故","title_en":"Accidents","title_py":["yì","wài","shì","gù"]}]};
-const SEED_PACK = {"schema":"lesson/1","textbook_id":"esc4","lesson_no":1,"words":[{"id":"w01","hz":"混血儿","py":"hùnxuè'ér","en":"person of mixed blood","parts":[["混","hùn","mix"],["血","xuè","blood"],["儿","ér","suffix"]],"sent":"她是混血儿，一半是美国人，一半是中国人。","tr":"She is of mixed blood: half American, half Chinese.","near":["温血儿","昆血儿","混皿儿"],"tone":[]},{"id":"w02","hz":"俩","py":"liǎ","en":"two (people)","parts":[["俩","liǎ","two people"]],"sent":"我们俩上小学时就认识了。","tr":"The two of us have known each other since primary school.","near":["两","倆","俩个"],"tone":[]},{"id":"w03","hz":"认识","py":"rènshi","en":"to know (a person)","parts":[["认","rèn","recognize"],["识","shí","know"]],"sent":"我们俩上小学时就认识了。","tr":"The two of us have known each other since primary school.","near":["认织","认试","记识"],"tone":[]},{"id":"w04","hz":"跟","py":"gēn","en":"with; the same as（跟……一样）","parts":[["跟","gēn","with"]],"sent":"她跟我一样高。","tr":"She is as tall as I am.","near":["根","很","银"],"tone":[]},{"id":"w05","hz":"皮肤","py":"pífū","en":"skin","parts":[["皮","pí","skin; leather"],["肤","fū","skin"]],"sent":"她皮肤白白的，很爱笑。","tr":"Her skin is fair and she smiles a lot.","near":["皮服","波肤","皮胖"],"tone":[]},{"id":"w06","hz":"笑","py":"xiào","en":"smile; laugh","parts":[["笑","xiào","smile"]],"sent":"她皮肤白白的，很爱笑。","tr":"Her skin is fair and she smiles a lot.","near":["哭","竿","笔"],"tone":["小"]},{"id":"w07","hz":"逛街","py":"guàngjiē","en":"stroll around the shops","parts":[["逛","guàng","stroll"],["街","jiē","street"]],"sent":"我们喜欢一起逛街、看电影、聊天儿。","tr":"We like to go round the shops, watch films and chat together.","near":["狂街","逛衔","迂街"],"tone":[]},{"id":"w08","hz":"聊天儿","py":"liáotiānr","en":"to chat","parts":[["聊","liáo","chat"],["天儿","tiānr","talk"]],"sent":"我们喜欢一起逛街、看电影、聊天儿。","tr":"We like to go round the shops, watch films and chat together.","near":["柳天儿","聊夭儿","卿天儿"],"tone":[]},{"id":"w09","hz":"只有","py":"zhǐyǒu","en":"only（只有……才）","parts":[["只","zhǐ","only"],["有","yǒu","have"]],"sent":"我们只有在假期里才能见面。","tr":"We can only meet during the holidays.","near":["兄有","只友","织有"],"tone":[]},{"id":"w10","hz":"才","py":"cái","en":"only then (after a condition)","parts":[["才","cái","only then"]],"sent":"我们只有在假期里才能见面。","tr":"We can only meet during the holidays.","near":["木","寸","打"],"tone":["菜"]},{"id":"w11","hz":"发","py":"fā","en":"to send (out)","parts":[["发","fā","send"]],"sent":"平时我们发电邮。","tr":"Normally we send emails.","near":["友","反","犮"],"tone":["法"]},{"id":"w12","hz":"电邮","py":"diànyóu","en":"e-mail（＝电子邮件）","parts":[["电","diàn","electric"],["邮","yóu","post; mail"]],"sent":"平时我们发电邮，有时也通电话。","tr":"Normally we send emails, and sometimes we talk on the phone.","near":["电油","电由","申邮"],"tone":[]},{"id":"w13","hz":"通","py":"tōng","en":"to connect; communicate","parts":[["通","tōng","connect"]],"sent":"有时也通电话。","tr":"Sometimes we also talk on the phone.","near":["桶","甬","诵"],"tone":["同","痛"]},{"id":"w14","hz":"堆","py":"duī","en":"to pile up; build (a snowman)","parts":[["堆","duī","pile"]],"sent":"冬天我们堆雪人、打雪仗。","tr":"In winter we build snowmen and have snowball fights.","near":["推","难","谁"],"tone":[]},{"id":"w15","hz":"打雪仗","py":"dǎ xuězhàng","en":"have a snowball fight","parts":[["打","dǎ","hit; play"],["雪","xuě","snow"],["仗","zhàng","fight; battle"]],"sent":"冬天我们堆雪人、打雪仗。","tr":"In winter we build snowmen and have snowball fights.","near":["打雪杖","打雷仗","打雪丈"],"tone":[]},{"id":"w16","hz":"沙滩","py":"shātān","en":"sandy beach","parts":[["沙","shā","sand"],["滩","tān","beach"]],"sent":"夏天我们去沙滩打球、滑水。","tr":"In summer we go to the beach to play ball and water-ski.","near":["纱滩","沙难","沙摊"],"tone":[]},{"id":"w17","hz":"滑水","py":"huáshuǐ","en":"water skiing","parts":[["滑","huá","slide; slip"],["水","shuǐ","water"]],"sent":"夏天我们去沙滩打球、滑水。","tr":"In summer we go to the beach to play ball and water-ski.","near":["滑冰","猾水","骨水"],"tone":[]},{"id":"w18","hz":"重要","py":"zhòngyào","en":"important","parts":[["重","zhòng","heavy"],["要","yào","want; need"]],"sent":"你觉得朋友重要吗？","tr":"Do you think friends are important?","near":["童要","重耍","动要"],"tone":["中药"]},{"id":"w19","hz":"开心","py":"kāixīn","en":"happy; delighted","parts":[["开","kāi","open"],["心","xīn","heart"]],"sent":"你不开心的时候可以跟朋友聊一聊。","tr":"When you are unhappy you can have a chat with a friend.","near":["关心","开必","升心"],"tone":[]},{"id":"w20","hz":"困难","py":"kùnnan","en":"difficulty","parts":[["困","kùn","stranded; trapped"],["难","nán","difficult"]],"sent":"有困难时朋友也可以帮你。","tr":"When you run into difficulties, friends can help you too.","near":["因难","团难","困堆"],"tone":[]}],"seg":{"平时我们发电邮。":[["平时","píngshí","usually",["píng","shí"]],["我们","wǒmen","we",["wǒ","men"]],["发","fā","send",["fā"]],["电邮","diànyóu","emails",["diàn","yóu"]],["。","","",[""]]],"平时我们发电邮，有时也通电话。":[["平时","píngshí","usually",["píng","shí"]],["我们","wǒmen","we",["wǒ","men"]],["发","fā","send",["fā"]],["电邮","diànyóu","emails",["diàn","yóu"]],["，","","",[""]],["有时","yǒushí","sometimes",["yǒu","shí"]],["也","yě","also",["yě"]],["通","tōng","communicate by",["tōng"]],["电话","diànhuà","phone",["diàn","huà"]],["。","","",[""]]],"她跟我一样高。":[["她","tā","she",["tā"]],["跟","gēn","with",["gēn"]],["我","wǒ","me",["wǒ"]],["一样","yīyàng","the same",["yī","yàng"]],["高","gāo","tall",["gāo"]],["。","","",[""]]],"她是混血儿，一半是美国人，一半是中国人。":[["她","tā","she",["tā"]],["是","shì","is",["shì"]],["混血儿","hùnxuèér","person of mixed blood",["hùn","xuè","ér"]],["，","","",[""]],["一半","yíbàn","half",["yí","bàn"]],["是","shì","is",["shì"]],["美国人","měiguórén","American",["měi","guó","rén"]],["，","","",[""]],["一半","yíbàn","half",["yí","bàn"]],["是","shì","is",["shì"]],["中国人","zhōngguórén","Chinese",["zhōng","guó","rén"]],["。","","",[""]]],"她皮肤白白的，很爱笑。":[["她","tā","she",["tā"]],["皮肤","pífū","skin",["pí","fū"]],["白白的","báibáide","nice and fair",["bái","bái","de"]],["，","","",[""]],["很","hěn","very",["hěn"]],["爱","ài","loves to",["ài"]],["笑","xiào","smile",["xiào"]],["。","","",[""]]],"有困难时朋友也可以帮你。":[["有","yǒu","have",["yǒu"]],["困难","kùnnán","difficulties",["kùn","nán"]],["时","shí","when",["shí"]],["朋友","péngyǒu","friends",["péng","yǒu"]],["也","yě","also",["yě"]],["可以","kěyǐ","can",["kě","yǐ"]],["帮","bāng","help",["bāng"]],["你","nǐ","you",["nǐ"]],["。","","",[""]]],"我们俩上小学时就认识了。":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["上","shàng","attend",["shàng"]],["小学","xiǎoxué","primary school",["xiǎo","xué"]],["时","shí","when",["shí"]],["就","jiù","already",["jiù"]],["认识","rènshí","knew each other",["rèn","shí"]],["了","le","(completed)",["le"]],["。","","",[""]]],"我们只有在假期里才能见面。":[["我们","wǒmen","we",["wǒ","men"]],["只有","zhǐyǒu","only",["zhǐ","yǒu"]],["在","zài","in",["zài"]],["假期","jiàqī","the holidays",["jià","qī"]],["里","lǐ","during",["lǐ"]],["才","cái","then / not until",["cái"]],["能","néng","can",["néng"]],["见面","jiànmiàn","meet",["jiàn","miàn"]],["。","","",[""]]],"我们喜欢一起逛街、看电影、聊天儿。":[["我们","wǒmen","we",["wǒ","men"]],["喜欢","xǐhuān","like to",["xǐ","huān"]],["一起","yìqǐ","together",["yì","qǐ"]],["逛街","guàngjiē","go round the shops",["guàng","jiē"]],["、","","",[""]],["看","kàn","watch",["kàn"]],["电影","diànyǐng","films",["diàn","yǐng"]],["、","","",[""]],["聊天儿","liáotiānér","chat",["liáo","tiān","ér"]],["。","","",[""]]],"夏天我们去沙滩打球、滑水。":[["夏天","xiàtiān","in summer",["xià","tiān"]],["我们","wǒmen","we",["wǒ","men"]],["去","qù","go to",["qù"]],["沙滩","shātān","the beach",["shā","tān"]],["打球","dǎqiú","play ball",["dǎ","qiú"]],["、","","",[""]],["滑水","huáshuǐ","water-ski",["huá","shuǐ"]],["。","","",[""]]],"有时也通电话。":[["有时","yǒushí","sometimes",["yǒu","shí"]],["也","yě","also",["yě"]],["通","tōng","communicate by",["tōng"]],["电话","diànhuà","phone",["diàn","huà"]],["。","","",[""]]],"冬天我们堆雪人、打雪仗。":[["冬天","dōngtiān","in winter",["dōng","tiān"]],["我们","wǒmen","we",["wǒ","men"]],["堆","duī","build",["duī"]],["雪人","xuěrén","snowmen",["xuě","rén"]],["、","","",[""]],["打雪仗","dǎxuězhàng","have snowball fights",["dǎ","xuě","zhàng"]],["。","","",[""]]],"你觉得朋友重要吗？":[["你","nǐ","you",["nǐ"]],["觉得","juéde","think",["jué","de"]],["朋友","péngyǒu","friends",["péng","yǒu"]],["重要","zhòngyào","important",["zhòng","yào"]],["吗","ma","(question)",["ma"]],["？","","",[""]]],"你不开心的时候可以跟朋友聊一聊。":[["你","nǐ","you",["nǐ"]],["不","bù","not",["bù"]],["开心","kāixīn","happy",["kāi","xīn"]],["的时候","deshíhòu","when",["de","shí","hòu"]],["可以","kěyǐ","can",["kě","yǐ"]],["跟","gēn","with",["gēn"]],["朋友","péngyǒu","a friend",["péng","yǒu"]],["聊一聊","liáoyīliáo","have a chat",["liáo","yī","liáo"]],["。","","",[""]]],"我叫柳青。":[["我","wǒ","I",["wǒ"]],["叫","jiào","am called",["jiào"]],["柳青","liǔqīng","Liu Qing",["liǔ","qīng"]],["。","","",[""]]],"我来介绍一下我的好朋友——小琴。":[["我","wǒ","I",["wǒ"]],["来","lái","will",["lái"]],["介绍","jièshào","introduce",["jiè","shào"]],["一下","yīxià","briefly",["yī","xià"]],["我的","wǒde","my",["wǒ","de"]],["好朋友","hǎopéngyǒu","good friend",["hǎo","péng","yǒu"]],["——","","",["",""]],["小琴","xiǎoqín","Xiaoqin",["xiǎo","qín"]],["。","","",[""]]],"她是混血儿，她一半是美国人，一半是中国人。":[["她","tā","she",["tā"]],["是","shì","is",["shì"]],["混血儿","hùnxuèér","of mixed blood",["hùn","xuè","ér"]],["，","","",[""]],["她","tā","she",["tā"]],["一半","yíbàn","half",["yí","bàn"]],["是","shì","is",["shì"]],["美国人","měiguórén","American",["měi","guó","rén"]],["，","","",[""]],["一半","yíbàn","half",["yí","bàn"]],["是","shì","is",["shì"]],["中国人","zhōngguórén","Chinese",["zhōng","guó","rén"]],["。","","",[""]]],"我们俩上小学时就认识了，因为从小学一年级起我们就坐在一起。":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["上","shàng","attended",["shàng"]],["小学","xiǎoxué","primary school",["xiǎo","xué"]],["时","shí","when",["shí"]],["就","jiù","already",["jiù"]],["认识","rènshí","knew each other",["rèn","shí"]],["了","le","(completed)",["le"]],["，","","",[""]],["因为","yīnwèi","because",["yīn","wèi"]],["从","cóng","from",["cóng"]],["小学","xiǎoxué","primary school",["xiǎo","xué"]],["一年级","yìniánjí","first grade",["yì","nián","jí"]],["起","qǐ","onwards",["qǐ"]],["我们","wǒmen","we",["wǒ","men"]],["就","jiù","have",["jiù"]],["坐","zuò","sat",["zuò"]],["在一起","zàiyìqǐ","together",["zài","yì","qǐ"]],["。","","",[""]]],"她跟我一样高，瘦瘦的，皮肤白白的，很爱笑。":[["她","tā","she",["tā"]],["跟","gēn","as",["gēn"]],["我","wǒ","me",["wǒ"]],["一样","yīyàng","the same",["yī","yàng"]],["高","gāo","tall",["gāo"]],["，","","",[""]],["瘦瘦的","shòushòude","slim",["shòu","shòu","de"]],["，","","",[""]],["皮肤","pífū","skin",["pí","fū"]],["白白的","báibáide","nice and fair",["bái","bái","de"]],["，","","",[""]],["很","hěn","very",["hěn"]],["爱","ài","loves to",["ài"]],["笑","xiào","smile",["xiào"]],["。","","",[""]]],"她现在在英国读书。":[["她","tā","she",["tā"]],["现在","xiànzài","now",["xiàn","zài"]],["在","zài","in",["zài"]],["英国","yīngguó","Britain",["yīng","guó"]],["读书","dúshū","studies",["dú","shū"]],["。","","",[""]]],"你最要好的朋友是谁？":[["你","nǐ","your",["nǐ"]],["最要好的","zuìyàohǎode","closest",["zuì","yào","hǎo","de"]],["朋友","péngyǒu","friend",["péng","yǒu"]],["是","shì","is",["shì"]],["谁","shuí","who",["shuí"]],["？","","",[""]]],"他叫周远。":[["他","tā","he",["tā"]],["叫","jiào","is called",["jiào"]],["周远","zhōuyuǎn","Zhou Yuan",["zhōu","yuǎn"]],["。","","",[""]]],"我们从小就是好朋友。":[["我们","wǒmen","we",["wǒ","men"]],["从小","cóngxiǎo","since childhood",["cóng","xiǎo"]],["就","jiù","have",["jiù"]],["是","shì","been",["shì"]],["好朋友","hǎopéngyǒu","good friends",["hǎo","péng","yǒu"]],["。","","",[""]]],"他在哪个学校上学？":[["他","tā","he",["tā"]],["在","zài","at",["zài"]],["哪个","nǎge","which",["nǎ","ge"]],["学校","xuéxiào","school",["xué","xiào"]],["上学","shàngxué","studies",["shàng","xué"]],["？","","",[""]]],"我们在同一个学校上学。":[["我们","wǒmen","we",["wǒ","men"]],["在","zài","at",["zài"]],["同","tóng","the same",["tóng"]],["一个","yígè","one",["yí","gè"]],["学校","xuéxiào","school",["xué","xiào"]],["上学","shàngxué","study",["shàng","xué"]],["。","","",[""]]],"你们在一起时做些什么？":[["你们","nǐmen","you",["nǐ","men"]],["在一起","zàiyìqǐ","together",["zài","yì","qǐ"]],["时","shí","when",["shí"]],["做","zuò","do",["zuò"]],["些","xiē","some",["xiē"]],["什么","shénme","what",["shén","me"]],["？","","",[""]]],"很重要，因为你不开心的时候可以跟朋友聊一聊，有困难时朋友也可以帮你。":[["很","hěn","very",["hěn"]],["重要","zhòngyào","important",["zhòng","yào"]],["，","","",[""]],["因为","yīnwèi","because",["yīn","wèi"]],["你","nǐ","you",["nǐ"]],["不","bù","not",["bù"]],["开心","kāixīn","happy",["kāi","xīn"]],["的时候","deshíhòu","when",["de","shí","hòu"]],["可以","kěyǐ","can",["kě","yǐ"]],["跟","gēn","with",["gēn"]],["朋友","péngyǒu","a friend",["péng","yǒu"]],["聊一聊","liáoyīliáo","have a chat",["liáo","yī","liáo"]],["，","","",[""]],["有","yǒu","have",["yǒu"]],["困难","kùnnán","difficulties",["kùn","nán"]],["时","shí","when",["shí"]],["朋友","péngyǒu","friends",["péng","yǒu"]],["也","yě","also",["yě"]],["可以","kěyǐ","can",["kě","yǐ"]],["帮","bāng","help",["bāng"]],["你","nǐ","you",["nǐ"]],["。","","",[""]]]},"chars":{"混":["hùn","mix; blend"],"血":["xuè","blood"],"儿":["ér","child; (word ending)"],"俩":["liǎ","two (of us)"],"认":["rèn","recognize"],"识":["shí","know"],"跟":["gēn","with; follow"],"皮":["pí","skin; leather"],"肤":["fū","skin"],"笑":["xiào","smile; laugh"],"逛":["guàng","stroll around"],"街":["jiē","street"],"聊":["liáo","chat"],"天":["tiān","day; sky"],"只":["zhǐ","only"],"有":["yǒu","have"],"才":["cái","only then; talent"],"发":["fā","send out"],"电":["diàn","electricity"],"邮":["yóu","mail; post"],"通":["tōng","connect; get through"],"堆":["duī","pile up"],"打":["dǎ","hit; play"],"雪":["xuě","snow"],"仗":["zhàng","fight; battle"],"沙":["shā","sand"],"滩":["tān","beach; shoal"],"滑":["huá","slide; slippery"],"水":["shuǐ","water"],"重":["zhòng","heavy"],"要":["yào","want; important"],"开":["kāi","open; start"],"心":["xīn","heart"],"困":["kùn","trapped; sleepy"],"难":["nán","difficult"],"摄":["shè","take (a photo)"],"影":["yǐng","shadow; image"],"师":["shī","master; expert"],"家":["jiā","family; home"],"庭":["tíng","courtyard; hall"],"主":["zhǔ","main; master"],"妇":["fù","woman; wife"],"结":["jié","tie; join"],"婚":["hūn","marry; wedding"],"教":["jiào","teach"],"授":["shòu","confer; teach"],"作":["zuò","do; write"],"工":["gōng","work; labour"],"程":["chéng","procedure; journey"],"班":["bān","class; shift"],"任":["rèn","appoint; duty"],"点":["diǎn","point; dot"],"名":["míng","name"],"音":["yīn","sound"],"乐":["yuè","music"],"会":["huì","meeting; be able to"],"黄":["huáng","yellow"],"老":["lǎo","old"],"性":["xìng","nature; gender"],"格":["gé","pattern; frame"],"温":["wēn","warm; mild"],"和":["hé","and; gentle"],"友":["yǒu","friend"],"善":["shàn","kind; good"]},"text":[{"title":"第一课","title_en":"My good friend Xiaoqin","lines":[{"hz":"我叫柳青。","tr":"My name is Liu Qing."},{"hz":"我来介绍一下我的好朋友——小琴。","tr":"Let me introduce my good friend, Xiaoqin."},{"hz":"她是混血儿，她一半是美国人，一半是中国人。","tr":"She is of mixed blood: half American, half Chinese."},{"hz":"我们俩上小学时就认识了，因为从小学一年级起我们就坐在一起。","tr":"The two of us have known each other since primary school, because we have sat together since Year 1."},{"hz":"她跟我一样高，瘦瘦的，皮肤白白的，很爱笑。","tr":"She is as tall as I am, slim, with fair skin, and she smiles a lot."},{"hz":"我们喜欢一起逛街、看电影、聊天儿。","tr":"We like to go round the shops, watch films and chat together."},{"hz":"她现在在英国读书。","tr":"She is now studying in Britain."},{"hz":"我们只有在假期里才能见面。","tr":"We can only meet during the holidays."},{"hz":"平时我们发电邮，有时也通电话。","tr":"Normally we send emails, and sometimes we talk on the phone."}]},{"title":"第二课","title_en":"Talking about a best friend","lines":[{"speaker":"问","hz":"你最要好的朋友是谁？","tr":"Who is your best friend?"},{"speaker":"答","hz":"他叫周远。我们从小就是好朋友。","tr":"He is called Zhou Yuan. We have been good friends since childhood."},{"speaker":"问","hz":"他在哪个学校上学？","tr":"Which school does he go to?"},{"speaker":"答","hz":"我们在同一个学校上学。","tr":"We go to the same school."},{"speaker":"问","hz":"你们在一起时做些什么？","tr":"What do you do when you are together?"},{"speaker":"答","hz":"冬天我们堆雪人、打雪仗。夏天我们去沙滩打球、滑水。","tr":"In winter we build snowmen and have snowball fights. In summer we go to the beach to play ball and water-ski."},{"speaker":"问","hz":"你觉得朋友重要吗？","tr":"Do you think friends are important?"},{"speaker":"答","hz":"很重要，因为你不开心的时候可以跟朋友聊一聊，有困难时朋友也可以帮你。","tr":"Very important, because when you are unhappy you can have a chat with a friend, and when you run into difficulties friends can help you too."}]}],"grammar":[],"write":[{"hz":"摄影师","py":"shèyǐngshī","en":"photographer","parts":[["摄","shè","take (a photo)"],["影","yǐng","shadow; image"],["师","shī","master; expert"]]},{"hz":"家庭主妇","py":"jiātíngzhǔfù","en":"housewife","parts":[["家","jiā","family; home"],["庭","tíng","courtyard; hall"],["主","zhǔ","main; master"],["妇","fù","woman; wife"]]},{"hz":"结婚","py":"jiéhūn","en":"get married","parts":[["结","jié","tie; join"],["婚","hūn","marry; wedding"]]},{"hz":"教授","py":"jiàoshòu","en":"professor","parts":[["教","jiào","teach"],["授","shòu","confer; teach"]]},{"hz":"作家","py":"zuòjiā","en":"writer","parts":[["作","zuò","do; write"],["家","jiā","family; home"]]},{"hz":"工程师","py":"gōngchéngshī","en":"engineer","parts":[["工","gōng","work; labour"],["程","chéng","procedure; journey"],["师","shī","master; expert"]]},{"hz":"班主任","py":"bānzhǔrèn","en":"home-room teacher","parts":[["班","bān","class; shift"],["主","zhǔ","main; master"],["任","rèn","appoint; duty"]]},{"hz":"点名","py":"diǎnmíng","en":"call the roll","parts":[["点","diǎn","point; dot"],["名","míng","name"]]},{"hz":"音乐会","py":"yīnyuèhuì","en":"concert","parts":[["音","yīn","sound"],["乐","yuè","music"],["会","huì","meeting; be able to"]]},{"hz":"黄老师性格温和友善。","py":"Huáng lǎoshī xìnggé wēnhé yǒushàn.","en":"Teacher Huang has a gentle personality and is friendly.","parts":[["黄","huáng","yellow"],["老","lǎo","old"],["师","shī","master; expert"],["性","xìng","nature; gender"],["格","gé","pattern; frame"],["温","wēn","warm; mild"],["和","hé","and; gentle"],["友","yǒu","friend"],["善","shàn","kind; good"]]}]};
+const SEED_PACK = {"schema":"lesson/1","textbook_id":"esc4","lesson_no":1,"words":[{"id":"w01","hz":"混血儿","py":"hùnxuè'ér","en":"person of mixed blood","parts":[["混","hùn","mix"],["血","xuè","blood"],["儿","ér","suffix"]],"sent":"她是混血儿，一半是美国人，一半是中国人。","tr":"She is of mixed blood: half American, half Chinese.","near":["温血儿","昆血儿","混皿儿"],"tone":[]},{"id":"w02","hz":"俩","py":"liǎ","en":"two (people)","parts":[["俩","liǎ","two people"]],"sent":"我们俩上小学时就认识了。","tr":"The two of us have known each other since primary school.","near":["两","倆","俩个"],"tone":[]},{"id":"w03","hz":"认识","py":"rènshi","en":"to know (a person)","parts":[["认","rèn","recognize"],["识","shí","know"]],"sent":"我们俩上小学时就认识了。","tr":"The two of us have known each other since primary school.","near":["认织","认试","记识"],"tone":[]},{"id":"w04","hz":"跟","py":"gēn","en":"with; the same as（跟……一样）","parts":[["跟","gēn","with"]],"sent":"她跟我一样高。","tr":"She is as tall as I am.","near":["根","很","银"],"tone":[]},{"id":"w05","hz":"皮肤","py":"pífū","en":"skin","parts":[["皮","pí","skin; leather"],["肤","fū","skin"]],"sent":"她皮肤白白的，很爱笑。","tr":"Her skin is fair and she smiles a lot.","near":["皮服","波肤","皮胖"],"tone":[]},{"id":"w06","hz":"笑","py":"xiào","en":"smile; laugh","parts":[["笑","xiào","smile"]],"sent":"她皮肤白白的，很爱笑。","tr":"Her skin is fair and she smiles a lot.","near":["哭","竿","笔"],"tone":["小"]},{"id":"w07","hz":"逛街","py":"guàngjiē","en":"stroll around the shops","parts":[["逛","guàng","stroll"],["街","jiē","street"]],"sent":"我们喜欢一起逛街、看电影、聊天儿。","tr":"We like to go round the shops, watch films and chat together.","near":["狂街","逛衔","迂街"],"tone":[]},{"id":"w08","hz":"聊天儿","py":"liáotiānr","en":"to chat","parts":[["聊","liáo","chat"],["天儿","tiānr","talk"]],"sent":"我们喜欢一起逛街、看电影、聊天儿。","tr":"We like to go round the shops, watch films and chat together.","near":["柳天儿","聊夭儿","卿天儿"],"tone":[]},{"id":"w09","hz":"只有","py":"zhǐyǒu","en":"only（只有……才）","parts":[["只","zhǐ","only"],["有","yǒu","have"]],"sent":"我们只有在假期里才能见面。","tr":"We can only meet during the holidays.","near":["兄有","只友","织有"],"tone":[]},{"id":"w10","hz":"才","py":"cái","en":"only then (after a condition)","parts":[["才","cái","only then"]],"sent":"我们只有在假期里才能见面。","tr":"We can only meet during the holidays.","near":["木","寸","打"],"tone":["菜"]},{"id":"w11","hz":"发","py":"fā","en":"to send (out)","parts":[["发","fā","send"]],"sent":"平时我们发电邮。","tr":"Normally we send emails.","near":["友","反","犮"],"tone":["法"]},{"id":"w12","hz":"电邮","py":"diànyóu","en":"e-mail（＝电子邮件）","parts":[["电","diàn","electric"],["邮","yóu","post; mail"]],"sent":"平时我们发电邮，有时也通电话。","tr":"Normally we send emails, and sometimes we talk on the phone.","near":["电油","电由","申邮"],"tone":[]},{"id":"w13","hz":"通","py":"tōng","en":"to connect; communicate","parts":[["通","tōng","connect"]],"sent":"有时也通电话。","tr":"Sometimes we also talk on the phone.","near":["桶","甬","诵"],"tone":["同","痛"]},{"id":"w14","hz":"堆","py":"duī","en":"to pile up; build (a snowman)","parts":[["堆","duī","pile"]],"sent":"冬天我们堆雪人、打雪仗。","tr":"In winter we build snowmen and have snowball fights.","near":["推","难","谁"],"tone":[]},{"id":"w15","hz":"打雪仗","py":"dǎ xuězhàng","en":"have a snowball fight","parts":[["打","dǎ","hit; play"],["雪","xuě","snow"],["仗","zhàng","fight; battle"]],"sent":"冬天我们堆雪人、打雪仗。","tr":"In winter we build snowmen and have snowball fights.","near":["打雪杖","打雷仗","打雪丈"],"tone":[]},{"id":"w16","hz":"沙滩","py":"shātān","en":"sandy beach","parts":[["沙","shā","sand"],["滩","tān","beach"]],"sent":"夏天我们去沙滩打球、滑水。","tr":"In summer we go to the beach to play ball and water-ski.","near":["纱滩","沙难","沙摊"],"tone":[]},{"id":"w17","hz":"滑水","py":"huáshuǐ","en":"water skiing","parts":[["滑","huá","slide; slip"],["水","shuǐ","water"]],"sent":"夏天我们去沙滩打球、滑水。","tr":"In summer we go to the beach to play ball and water-ski.","near":["滑冰","猾水","骨水"],"tone":[]},{"id":"w18","hz":"重要","py":"zhòngyào","en":"important","parts":[["重","zhòng","heavy"],["要","yào","want; need"]],"sent":"你觉得朋友重要吗？","tr":"Do you think friends are important?","near":["童要","重耍","动要"],"tone":["中药"]},{"id":"w19","hz":"开心","py":"kāixīn","en":"happy; delighted","parts":[["开","kāi","open"],["心","xīn","heart"]],"sent":"你不开心的时候可以跟朋友聊一聊。","tr":"When you are unhappy you can have a chat with a friend.","near":["关心","开必","升心"],"tone":[]},{"id":"w20","hz":"困难","py":"kùnnan","en":"difficulty","parts":[["困","kùn","stranded; trapped"],["难","nán","difficult"]],"sent":"有困难时朋友也可以帮你。","tr":"When you run into difficulties, friends can help you too.","near":["因难","团难","困堆"],"tone":[]}],"seg":{"平时我们发电邮。":[["平时","píngshí","usually",["píng","shí"]],["我们","wǒmen","we",["wǒ","men"]],["发","fā","send",["fā"]],["电邮","diànyóu","emails",["diàn","yóu"]],["。","","",[""]]],"平时我们发电邮，有时也通电话。":[["平时","píngshí","usually",["píng","shí"]],["我们","wǒmen","we",["wǒ","men"]],["发","fā","send",["fā"]],["电邮","diànyóu","emails",["diàn","yóu"]],["，","","",[""]],["有时","yǒushí","sometimes",["yǒu","shí"]],["也","yě","also",["yě"]],["通","tōng","communicate by",["tōng"]],["电话","diànhuà","phone",["diàn","huà"]],["。","","",[""]]],"她跟我一样高。":[["她","tā","she",["tā"]],["跟","gēn","with",["gēn"]],["我","wǒ","me",["wǒ"]],["一样","yīyàng","the same",["yī","yàng"]],["高","gāo","tall",["gāo"]],["。","","",[""]]],"她是混血儿，一半是美国人，一半是中国人。":[["她","tā","she",["tā"]],["是","shì","is",["shì"]],["混血儿","hùnxuèér","person of mixed blood",["hùn","xuè","ér"]],["，","","",[""]],["一半","yíbàn","half",["yí","bàn"]],["是","shì","is",["shì"]],["美国人","měiguórén","American",["měi","guó","rén"]],["，","","",[""]],["一半","yíbàn","half",["yí","bàn"]],["是","shì","is",["shì"]],["中国人","zhōngguórén","Chinese",["zhōng","guó","rén"]],["。","","",[""]]],"她皮肤白白的，很爱笑。":[["她","tā","she",["tā"]],["皮肤","pífū","skin",["pí","fū"]],["白白的","báibáide","nice and fair",["bái","bái","de"]],["，","","",[""]],["很","hěn","very",["hěn"]],["爱","ài","loves to",["ài"]],["笑","xiào","smile",["xiào"]],["。","","",[""]]],"有困难时朋友也可以帮你。":[["有","yǒu","have",["yǒu"]],["困难","kùnnán","difficulties",["kùn","nán"]],["时","shí","when",["shí"]],["朋友","péngyǒu","friends",["péng","yǒu"]],["也","yě","also",["yě"]],["可以","kěyǐ","can",["kě","yǐ"]],["帮","bāng","help",["bāng"]],["你","nǐ","you",["nǐ"]],["。","","",[""]]],"我们俩上小学时就认识了。":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["上","shàng","attend",["shàng"]],["小学","xiǎoxué","primary school",["xiǎo","xué"]],["时","shí","when",["shí"]],["就","jiù","already",["jiù"]],["认识","rènshí","knew each other",["rèn","shí"]],["了","le","(completed)",["le"]],["。","","",[""]]],"我们只有在假期里才能见面。":[["我们","wǒmen","we",["wǒ","men"]],["只有","zhǐyǒu","only",["zhǐ","yǒu"]],["在","zài","in",["zài"]],["假期","jiàqī","the holidays",["jià","qī"]],["里","lǐ","during",["lǐ"]],["才","cái","then / not until",["cái"]],["能","néng","can",["néng"]],["见面","jiànmiàn","meet",["jiàn","miàn"]],["。","","",[""]]],"我们喜欢一起逛街、看电影、聊天儿。":[["我们","wǒmen","we",["wǒ","men"]],["喜欢","xǐhuān","like to",["xǐ","huān"]],["一起","yìqǐ","together",["yì","qǐ"]],["逛街","guàngjiē","go round the shops",["guàng","jiē"]],["、","","",[""]],["看","kàn","watch",["kàn"]],["电影","diànyǐng","films",["diàn","yǐng"]],["、","","",[""]],["聊天儿","liáotiānr","chat",["liáo","tiānr",""]],["。","","",[""]]],"夏天我们去沙滩打球、滑水。":[["夏天","xiàtiān","in summer",["xià","tiān"]],["我们","wǒmen","we",["wǒ","men"]],["去","qù","go to",["qù"]],["沙滩","shātān","the beach",["shā","tān"]],["打球","dǎqiú","play ball",["dǎ","qiú"]],["、","","",[""]],["滑水","huáshuǐ","water-ski",["huá","shuǐ"]],["。","","",[""]]],"有时也通电话。":[["有时","yǒushí","sometimes",["yǒu","shí"]],["也","yě","also",["yě"]],["通","tōng","communicate by",["tōng"]],["电话","diànhuà","phone",["diàn","huà"]],["。","","",[""]]],"冬天我们堆雪人、打雪仗。":[["冬天","dōngtiān","in winter",["dōng","tiān"]],["我们","wǒmen","we",["wǒ","men"]],["堆","duī","build",["duī"]],["雪人","xuěrén","snowmen",["xuě","rén"]],["、","","",[""]],["打雪仗","dǎxuězhàng","have snowball fights",["dǎ","xuě","zhàng"]],["。","","",[""]]],"你觉得朋友重要吗？":[["你","nǐ","you",["nǐ"]],["觉得","juéde","think",["jué","de"]],["朋友","péngyǒu","friends",["péng","yǒu"]],["重要","zhòngyào","important",["zhòng","yào"]],["吗","ma","(question)",["ma"]],["？","","",[""]]],"你不开心的时候可以跟朋友聊一聊。":[["你","nǐ","you",["nǐ"]],["不","bù","not",["bù"]],["开心","kāixīn","happy",["kāi","xīn"]],["的时候","deshíhòu","when",["de","shí","hòu"]],["可以","kěyǐ","can",["kě","yǐ"]],["跟","gēn","with",["gēn"]],["朋友","péngyǒu","a friend",["péng","yǒu"]],["聊一聊","liáoyīliáo","have a chat",["liáo","yī","liáo"]],["。","","",[""]]],"我叫柳青。":[["我","wǒ","I",["wǒ"]],["叫","jiào","am called",["jiào"]],["柳青","liǔqīng","Liu Qing",["liǔ","qīng"]],["。","","",[""]]],"我来介绍一下我的好朋友——小琴。":[["我","wǒ","I",["wǒ"]],["来","lái","will",["lái"]],["介绍","jièshào","introduce",["jiè","shào"]],["一下","yīxià","briefly",["yī","xià"]],["我的","wǒde","my",["wǒ","de"]],["好朋友","hǎopéngyǒu","good friend",["hǎo","péng","yǒu"]],["——","","",["",""]],["小琴","xiǎoqín","Xiaoqin",["xiǎo","qín"]],["。","","",[""]]],"她是混血儿，她一半是美国人，一半是中国人。":[["她","tā","she",["tā"]],["是","shì","is",["shì"]],["混血儿","hùnxuèér","of mixed blood",["hùn","xuè","ér"]],["，","","",[""]],["她","tā","she",["tā"]],["一半","yíbàn","half",["yí","bàn"]],["是","shì","is",["shì"]],["美国人","měiguórén","American",["měi","guó","rén"]],["，","","",[""]],["一半","yíbàn","half",["yí","bàn"]],["是","shì","is",["shì"]],["中国人","zhōngguórén","Chinese",["zhōng","guó","rén"]],["。","","",[""]]],"我们俩上小学时就认识了，因为从小学一年级起我们就坐在一起。":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["上","shàng","attended",["shàng"]],["小学","xiǎoxué","primary school",["xiǎo","xué"]],["时","shí","when",["shí"]],["就","jiù","already",["jiù"]],["认识","rènshí","knew each other",["rèn","shí"]],["了","le","(completed)",["le"]],["，","","",[""]],["因为","yīnwèi","because",["yīn","wèi"]],["从","cóng","from",["cóng"]],["小学","xiǎoxué","primary school",["xiǎo","xué"]],["一年级","yìniánjí","first grade",["yì","nián","jí"]],["起","qǐ","onwards",["qǐ"]],["我们","wǒmen","we",["wǒ","men"]],["就","jiù","have",["jiù"]],["坐","zuò","sat",["zuò"]],["在一起","zàiyìqǐ","together",["zài","yì","qǐ"]],["。","","",[""]]],"她跟我一样高，瘦瘦的，皮肤白白的，很爱笑。":[["她","tā","she",["tā"]],["跟","gēn","as",["gēn"]],["我","wǒ","me",["wǒ"]],["一样","yīyàng","the same",["yī","yàng"]],["高","gāo","tall",["gāo"]],["，","","",[""]],["瘦瘦的","shòushòude","slim",["shòu","shòu","de"]],["，","","",[""]],["皮肤","pífū","skin",["pí","fū"]],["白白的","báibáide","nice and fair",["bái","bái","de"]],["，","","",[""]],["很","hěn","very",["hěn"]],["爱","ài","loves to",["ài"]],["笑","xiào","smile",["xiào"]],["。","","",[""]]],"她现在在英国读书。":[["她","tā","she",["tā"]],["现在","xiànzài","now",["xiàn","zài"]],["在","zài","in",["zài"]],["英国","yīngguó","Britain",["yīng","guó"]],["读书","dúshū","studies",["dú","shū"]],["。","","",[""]]],"你最要好的朋友是谁？":[["你","nǐ","your",["nǐ"]],["最要好的","zuìyàohǎode","closest",["zuì","yào","hǎo","de"]],["朋友","péngyǒu","friend",["péng","yǒu"]],["是","shì","is",["shì"]],["谁","shuí","who",["shuí"]],["？","","",[""]]],"他叫周远。":[["他","tā","he",["tā"]],["叫","jiào","is called",["jiào"]],["周远","zhōuyuǎn","Zhou Yuan",["zhōu","yuǎn"]],["。","","",[""]]],"我们从小就是好朋友。":[["我们","wǒmen","we",["wǒ","men"]],["从小","cóngxiǎo","since childhood",["cóng","xiǎo"]],["就","jiù","have",["jiù"]],["是","shì","been",["shì"]],["好朋友","hǎopéngyǒu","good friends",["hǎo","péng","yǒu"]],["。","","",[""]]],"他在哪个学校上学？":[["他","tā","he",["tā"]],["在","zài","at",["zài"]],["哪个","nǎge","which",["nǎ","ge"]],["学校","xuéxiào","school",["xué","xiào"]],["上学","shàngxué","studies",["shàng","xué"]],["？","","",[""]]],"我们在同一个学校上学。":[["我们","wǒmen","we",["wǒ","men"]],["在","zài","at",["zài"]],["同","tóng","the same",["tóng"]],["一个","yígè","one",["yí","gè"]],["学校","xuéxiào","school",["xué","xiào"]],["上学","shàngxué","study",["shàng","xué"]],["。","","",[""]]],"你们在一起时做些什么？":[["你们","nǐmen","you",["nǐ","men"]],["在一起","zàiyìqǐ","together",["zài","yì","qǐ"]],["时","shí","when",["shí"]],["做","zuò","do",["zuò"]],["些","xiē","some",["xiē"]],["什么","shénme","what",["shén","me"]],["？","","",[""]]],"很重要，因为你不开心的时候可以跟朋友聊一聊，有困难时朋友也可以帮你。":[["很","hěn","very",["hěn"]],["重要","zhòngyào","important",["zhòng","yào"]],["，","","",[""]],["因为","yīnwèi","because",["yīn","wèi"]],["你","nǐ","you",["nǐ"]],["不","bù","not",["bù"]],["开心","kāixīn","happy",["kāi","xīn"]],["的时候","deshíhòu","when",["de","shí","hòu"]],["可以","kěyǐ","can",["kě","yǐ"]],["跟","gēn","with",["gēn"]],["朋友","péngyǒu","a friend",["péng","yǒu"]],["聊一聊","liáoyīliáo","have a chat",["liáo","yī","liáo"]],["，","","",[""]],["有","yǒu","have",["yǒu"]],["困难","kùnnán","difficulties",["kùn","nán"]],["时","shí","when",["shí"]],["朋友","péngyǒu","friends",["péng","yǒu"]],["也","yě","also",["yě"]],["可以","kěyǐ","can",["kě","yǐ"]],["帮","bāng","help",["bāng"]],["你","nǐ","you",["nǐ"]],["。","","",[""]]],"他们只有在春节才穿上新衣服。":[["他们","tāmen","they",["tā","men"]],["只有","zhǐyǒu","only",["zhǐ","yǒu"]],["在","zài","at",["zài"]],["春节","chūnjié","Spring Festival",["chūn","jié"]],["才","cái","then / not until",["cái"]],["穿上","chuānshàng","put on",["chuān","shàng"]],["新","xīn","new",["xīn"]],["衣服","yīfú","clothes",["yī","fú"]],["。","","",[""]]],"爸爸只有在周末……":[["爸爸","bàbà","dad",["bà","bà"]],["只有","zhǐyǒu","only",["zhǐ","yǒu"]],["在","zài","on",["zài"]],["周末","zhōumò","the weekend",["zhōu","mò"]],["……","","",["",""]]],"妈妈只有在下班以后……":[["妈妈","māmā","mum",["mā","mā"]],["只有","zhǐyǒu","only",["zhǐ","yǒu"]],["在","zài","after",["zài"]],["下班","xiàbān","finishing work",["xià","bān"]],["以后","yǐhòu","after",["yǐ","hòu"]],["……","","",["",""]]],"我们只有在课间休息的时候……":[["我们","wǒmen","we",["wǒ","men"]],["只有","zhǐyǒu","only",["zhǐ","yǒu"]],["在","zài","at",["zài"]],["课间休息","kèjiānxiūxī","the break between classes",["kè","jiān","xiū","xī"]],["的时候","deshíhòu","when",["de","shí","hòu"]],["……","","",["",""]]],"我们只有在假期里……":[["我们","wǒmen","we",["wǒ","men"]],["只有","zhǐyǒu","only",["zhǐ","yǒu"]],["在","zài","in",["zài"]],["假期","jiàqī","the holidays",["jià","qī"]],["里","lǐ","during",["lǐ"]],["……","","",["",""]]],"她的毛衣跟我的一样好看。":[["她的","tāde","her",["tā","de"]],["毛衣","máoyī","sweater",["máo","yī"]],["跟","gēn","as",["gēn"]],["我的","wǒde","mine",["wǒ","de"]],["一样","yīyàng","the same",["yī","yàng"]],["好看","hǎokàn","good-looking",["hǎo","kàn"]],["。","","",[""]]],"这件衬衫跟那件……":[["这","zhè","this",["zhè"]],["件","jiàn","(measure word)",["jiàn"]],["衬衫","chènshān","shirt",["chèn","shān"]],["跟","gēn","as",["gēn"]],["那","nà","that",["nà"]],["件","jiàn","(measure word)",["jiàn"]],["……","","",["",""]]],"爸爸的领带跟……":[["爸爸的","bàbàde","dad's",["bà","bà","de"]],["领带","lǐngdài","tie",["lǐng","dài"]],["跟","gēn","as",["gēn"]],["……","","",["",""]]],"我的自行车跟……":[["我的","wǒde","my",["wǒ","de"]],["自行车","zìxíngchē","bicycle",["zì","xíng","chē"]],["跟","gēn","as",["gēn"]],["……","","",["",""]]],"姐姐的个子跟……":[["姐姐的","jiějiěde","elder sister's",["jiě","jiě","de"]],["个子","gèzi","height",["gè","zi"]],["跟","gēn","as",["gēn"]],["……","","",["",""]]],"老师的手提包跟……":[["老师的","lǎoshīde","teacher's",["lǎo","shī","de"]],["手提包","shǒutíbāo","handbag",["shǒu","tí","bāo"]],["跟","gēn","as",["gēn"]],["……","","",["",""]]],"我们俩喜欢看同一个电视节目。":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["喜欢","xǐhuān","like",["xǐ","huān"]],["看","kàn","watch",["kàn"]],["同","tóng","the same",["tóng"]],["一个","yígè","one",["yí","gè"]],["电视节目","diànshìjiémù","TV programme",["diàn","shì","jié","mù"]],["。","","",[""]]],"我们俩喜欢学同一种……":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["喜欢","xǐhuān","like",["xǐ","huān"]],["学","xué","learn",["xué"]],["同","tóng","the same",["tóng"]],["一种","yīzhǒng","one kind of",["yī","zhǒng"]],["……","","",["",""]]],"我们俩喜欢吃同一种……":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["喜欢","xǐhuān","like",["xǐ","huān"]],["吃","chī","eat",["chī"]],["同","tóng","the same",["tóng"]],["一种","yīzhǒng","one kind of",["yī","zhǒng"]],["……","","",["",""]]],"我们俩喜欢穿同一种颜色的……":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["喜欢","xǐhuān","like",["xǐ","huān"]],["穿","chuān","wear",["chuān"]],["同","tóng","the same",["tóng"]],["一种","yīzhǒng","one kind of",["yī","zhǒng"]],["颜色","yánsè","colour",["yán","sè"]],["的","de","(possessive)",["de"]],["……","","",["",""]]],"我们俩住在同一幢……":[["我们","wǒmen","we",["wǒ","men"]],["俩","liǎ","the two of us",["liǎ"]],["住","zhù","live",["zhù"]],["在","zài","in",["zài"]],["同","tóng","the same",["tóng"]],["一幢","yīchuáng","one (building)",["yī","chuáng"]],["……","","",["",""]]],"你从小就喜欢做什么运动？":[["你","nǐ","you",["nǐ"]],["从小","cóngxiǎo","since childhood",["cóng","xiǎo"]],["就","jiù","have",["jiù"]],["喜欢","xǐhuān","liked",["xǐ","huān"]],["做","zuò","doing",["zuò"]],["什么","shénme","what",["shén","me"]],["运动","yùndòng","sport",["yùn","dòng"]],["？","","",[""]]],"你从小就喜欢吃什么？喝什么？":[["你","nǐ","you",["nǐ"]],["从小","cóngxiǎo","since childhood",["cóng","xiǎo"]],["就","jiù","have",["jiù"]],["喜欢","xǐhuān","liked",["xǐ","huān"]],["吃","chī","eating",["chī"]],["什么","shénme","what",["shén","me"]],["？","","",[""]],["喝","hē","drinking",["hē"]],["什么","shénme","what",["shén","me"]],["？","","",[""]]],"你从小就喜欢看什么电视节目？":[["你","nǐ","you",["nǐ"]],["从小","cóngxiǎo","since childhood",["cóng","xiǎo"]],["就","jiù","have",["jiù"]],["喜欢","xǐhuān","liked",["xǐ","huān"]],["看","kàn","watching",["kàn"]],["什么","shénme","what",["shén","me"]],["电视节目","diànshìjiémù","TV programmes",["diàn","shì","jié","mù"]],["？","","",[""]]],"你从小就认识哪些朋友？":[["你","nǐ","you",["nǐ"]],["从小","cóngxiǎo","since childhood",["cóng","xiǎo"]],["就","jiù","have",["jiù"]],["认识","rènshí","known",["rèn","shí"]],["哪些","nǎxiē","which",["nǎ","xiē"]],["朋友","péngyǒu","friends",["péng","yǒu"]],["？","","",[""]]],"你最要好的朋友叫什么名字？他/她多大了？是哪国人？":[["你","nǐ","your",["nǐ"]],["最要好的","zuìyàohǎode","closest",["zuì","yào","hǎo","de"]],["朋友","péngyǒu","friend",["péng","yǒu"]],["叫","jiào","is called",["jiào"]],["什么","shénme","what",["shén","me"]],["名字","míngzì","name",["míng","zì"]],["？","","",[""]],["他/她","tā/tā","he/she",["tā","","tā"]],["多大","duōdà","how old",["duō","dà"]],["了","le","(now)",["le"]],["？","","",[""]],["是","shì","is",["shì"]],["哪国人","nǎguórén","which nationality",["nǎ","guó","rén"]],["？","","",[""]]],"他/她上几年级？在哪所学校读书？":[["他/她","tā/tā","he/she",["tā","","tā"]],["上","shàng","is in",["shàng"]],["几","jǐ","which",["jǐ"]],["年级","niánjí","year",["nián","jí"]],["？","","",[""]],["在","zài","at",["zài"]],["哪","nǎ","which",["nǎ"]],["所","suǒ","(measure word)",["suǒ"]],["学校","xuéxiào","school",["xué","xiào"]],["读书","dúshū","studies",["dú","shū"]],["？","","",[""]]],"他/她长什么样儿？":[["他/她","tā/tā","he/she",["tā","","tā"]],["长","zhǎng","looks",["zhǎng"]],["什么样儿","shénmeyàngr","like what",["shén","me","yàngr",""]],["？","","",[""]]],"你们是怎么认识的？":[["你们","nǐmen","you two",["nǐ","men"]],["是","shì","(emphasis)",["shì"]],["怎么","zěnme","how",["zěn","me"]],["认识","rènshí","got to know each other",["rèn","shí"]],["的","de","(emphasis)",["de"]],["？","","",[""]]],"你们现在经常一起逛街、看电影吗？":[["你们","nǐmen","you two",["nǐ","men"]],["现在","xiànzài","now",["xiàn","zài"]],["经常","jīngcháng","often",["jīng","cháng"]],["一起","yìqǐ","together",["yì","qǐ"]],["逛街","guàngjiē","go round the shops",["guàng","jiē"]],["、","","",[""]],["看","kàn","watch",["kàn"]],["电影","diànyǐng","films",["diàn","yǐng"]],["吗","ma","(question)",["ma"]],["？","","",[""]]],"你们一般什么时候通电话？":[["你们","nǐmen","you two",["nǐ","men"]],["一般","yìbān","usually",["yì","bān"]],["什么时候","shénmeshíhòu","when",["shén","me","shí","hòu"]],["通","tōng","communicate by",["tōng"]],["电话","diànhuà","phone",["diàn","huà"]],["？","","",[""]]],"你觉得朋友重要吗？为什么？":[["你","nǐ","you",["nǐ"]],["觉得","juéde","think",["jué","de"]],["朋友","péngyǒu","friends",["péng","yǒu"]],["重要","zhòngyào","important",["zhòng","yào"]],["吗","ma","(question)",["ma"]],["？","","",[""]],["为什么","wèishénme","why",["wèi","shén","me"]],["？","","",[""]]],"你觉得哪个朋友对你最好？":[["你","nǐ","you",["nǐ"]],["觉得","juéde","think",["jué","de"]],["哪个","nǎge","which",["nǎ","ge"]],["朋友","péngyǒu","friend",["péng","yǒu"]],["对","duì","to",["duì"]],["你","nǐ","you",["nǐ"]],["最好","zuìhǎo","is best",["zuì","hǎo"]],["？","","",[""]]],"你不开心的时候会跟谁说？":[["你","nǐ","you",["nǐ"]],["不","bù","not",["bù"]],["开心","kāixīn","happy",["kāi","xīn"]],["的时候","deshíhòu","when",["de","shí","hòu"]],["会","huì","would",["huì"]],["跟","gēn","with",["gēn"]],["谁","shuí","whom",["shuí"]],["说","shuō","talk",["shuō"]],["？","","",[""]]],"有困难的时候，谁帮过你？":[["有","yǒu","have",["yǒu"]],["困难","kùnnán","difficulties",["kùn","nán"]],["的时候","deshíhòu","when",["de","shí","hòu"]],["，","","",[""]],["谁","shuí","who",["shuí"]],["帮","bāng","helped",["bāng"]],["过","guò","(experience)",["guò"]],["你","nǐ","you",["nǐ"]],["？","","",[""]]],"我从小就喜欢画画儿。":[["我","wǒ","I",["wǒ"]],["从小","cóngxiǎo","since childhood",["cóng","xiǎo"]],["就","jiù","have",["jiù"]],["喜欢","xǐhuān","liked",["xǐ","huān"]],["画","huà","drawing",["huà"]],["画儿","huàr","pictures",["huàr",""]],["。","","",[""]]]},"chars":{"混":["hùn","mix; blend"],"血":["xuè","blood"],"儿":["ér","child; (word ending)"],"俩":["liǎ","two (of us)"],"认":["rèn","recognize"],"识":["shí","know"],"跟":["gēn","with; follow"],"皮":["pí","skin; leather"],"肤":["fū","skin"],"笑":["xiào","smile; laugh"],"逛":["guàng","stroll around"],"街":["jiē","street"],"聊":["liáo","chat"],"天":["tiān","day; sky"],"只":["zhǐ","only"],"有":["yǒu","have"],"才":["cái","only then; talent"],"发":["fā","send out"],"电":["diàn","electricity"],"邮":["yóu","mail; post"],"通":["tōng","connect; get through"],"堆":["duī","pile up"],"打":["dǎ","hit; play"],"雪":["xuě","snow"],"仗":["zhàng","fight; battle"],"沙":["shā","sand"],"滩":["tān","beach; shoal"],"滑":["huá","slide; slippery"],"水":["shuǐ","water"],"重":["zhòng","heavy"],"要":["yào","want; important"],"开":["kāi","open; start"],"心":["xīn","heart"],"困":["kùn","trapped; sleepy"],"难":["nán","difficult"],"摄":["shè","take (a photo)"],"影":["yǐng","shadow; image"],"师":["shī","master; expert"],"家":["jiā","family; home"],"庭":["tíng","courtyard; hall"],"主":["zhǔ","main; master"],"妇":["fù","woman; wife"],"结":["jié","tie; join"],"婚":["hūn","marry; wedding"],"教":["jiào","teach"],"授":["shòu","confer; teach"],"作":["zuò","do; write"],"工":["gōng","work; labour"],"程":["chéng","procedure; journey"],"班":["bān","class; shift"],"任":["rèn","appoint; duty"],"点":["diǎn","point; dot"],"名":["míng","name"],"音":["yīn","sound"],"乐":["yuè","music"],"会":["huì","meeting; be able to"],"黄":["huáng","yellow"],"老":["lǎo","old"],"性":["xìng","nature; gender"],"格":["gé","pattern; frame"],"温":["wēn","warm; mild"],"和":["hé","and; gentle"],"友":["yǒu","friend"],"善":["shàn","kind; good"]},"text":[{"title":"第一课","title_en":"My good friend Xiaoqin","lines":[{"hz":"我叫柳青。","tr":"My name is Liu Qing."},{"hz":"我来介绍一下我的好朋友——小琴。","tr":"Let me introduce my good friend, Xiaoqin."},{"hz":"她是混血儿，她一半是美国人，一半是中国人。","tr":"She is of mixed blood: half American, half Chinese."},{"hz":"我们俩上小学时就认识了，因为从小学一年级起我们就坐在一起。","tr":"The two of us have known each other since primary school, because we have sat together since Year 1."},{"hz":"她跟我一样高，瘦瘦的，皮肤白白的，很爱笑。","tr":"She is as tall as I am, slim, with fair skin, and she smiles a lot."},{"hz":"我们喜欢一起逛街、看电影、聊天儿。","tr":"We like to go round the shops, watch films and chat together."},{"hz":"她现在在英国读书。","tr":"She is now studying in Britain."},{"hz":"我们只有在假期里才能见面。","tr":"We can only meet during the holidays."},{"hz":"平时我们发电邮，有时也通电话。","tr":"Normally we send emails, and sometimes we talk on the phone."}]},{"title":"第二课","title_en":"Talking about a best friend","lines":[{"speaker":"问","hz":"你最要好的朋友是谁？","tr":"Who is your best friend?"},{"speaker":"答","hz":"他叫周远。我们从小就是好朋友。","tr":"He is called Zhou Yuan. We have been good friends since childhood."},{"speaker":"问","hz":"他在哪个学校上学？","tr":"Which school does he go to?"},{"speaker":"答","hz":"我们在同一个学校上学。","tr":"We go to the same school."},{"speaker":"问","hz":"你们在一起时做些什么？","tr":"What do you do when you are together?"},{"speaker":"答","hz":"冬天我们堆雪人、打雪仗。夏天我们去沙滩打球、滑水。","tr":"In winter we build snowmen and have snowball fights. In summer we go to the beach to play ball and water-ski."},{"speaker":"问","hz":"你觉得朋友重要吗？","tr":"Do you think friends are important?"},{"speaker":"答","hz":"很重要，因为你不开心的时候可以跟朋友聊一聊，有困难时朋友也可以帮你。","tr":"Very important, because when you are unhappy you can have a chat with a friend, and when you run into difficulties friends can help you too."}]}],"grammar":[],"write":[{"hz":"摄影师","py":"shèyǐngshī","en":"photographer","parts":[["摄","shè","take (a photo)"],["影","yǐng","shadow; image"],["师","shī","master; expert"]]},{"hz":"家庭主妇","py":"jiātíngzhǔfù","en":"housewife","parts":[["家","jiā","family; home"],["庭","tíng","courtyard; hall"],["主","zhǔ","main; master"],["妇","fù","woman; wife"]]},{"hz":"结婚","py":"jiéhūn","en":"get married","parts":[["结","jié","tie; join"],["婚","hūn","marry; wedding"]]},{"hz":"教授","py":"jiàoshòu","en":"professor","parts":[["教","jiào","teach"],["授","shòu","confer; teach"]]},{"hz":"作家","py":"zuòjiā","en":"writer","parts":[["作","zuò","do; write"],["家","jiā","family; home"]]},{"hz":"工程师","py":"gōngchéngshī","en":"engineer","parts":[["工","gōng","work; labour"],["程","chéng","procedure; journey"],["师","shī","master; expert"]]},{"hz":"班主任","py":"bānzhǔrèn","en":"home-room teacher","parts":[["班","bān","class; shift"],["主","zhǔ","main; master"],["任","rèn","appoint; duty"]]},{"hz":"点名","py":"diǎnmíng","en":"call the roll","parts":[["点","diǎn","point; dot"],["名","míng","name"]]},{"hz":"音乐会","py":"yīnyuèhuì","en":"concert","parts":[["音","yīn","sound"],["乐","yuè","music"],["会","huì","meeting; be able to"]]},{"hz":"黄老师性格温和友善。","py":"Huáng lǎoshī xìnggé wēnhé yǒushàn.","en":"Teacher Huang has a gentle personality and is friendly.","parts":[["黄","huáng","yellow"],["老","lǎo","old"],["师","shī","master; expert"],["性","xìng","nature; gender"],["格","gé","pattern; frame"],["温","wēn","warm; mild"],["和","hé","and; gentle"],["友","yǒu","friend"],["善","shàn","kind; good"]]}],"speaking":[{"id":"sp1","type":"pattern","point":"只有……才","note":"表示条件唯一：只有满足这个条件，才会发生后面的事","example":"他们只有在春节才穿上新衣服。","prompts":["爸爸只有在周末……","妈妈只有在下班以后……","我们只有在课间休息的时候……","我们只有在假期里……"],"use":["只有","才"]},{"id":"sp2","type":"pattern","point":"跟……一样","note":"比较两样东西相同。否定用「跟……不一样」","example":"她的毛衣跟我的一样好看。","prompts":["这件衬衫跟那件……","爸爸的领带跟……","我的自行车跟……","姐姐的个子跟……","老师的手提包跟……"],"use":["跟"]},{"id":"sp3","type":"pattern","point":"同一个 / 同一种","note":"「同」表示相同的那一个，后面要带量词","example":"我们俩喜欢看同一个电视节目。","prompts":["我们俩喜欢学同一种……","我们俩喜欢吃同一种……","我们俩喜欢穿同一种颜色的……","我们俩住在同一幢……"],"use":["俩"]},{"id":"sp4","type":"pattern","point":"从小就……","note":"表示很早就开始，一直到现在。「从小」后面常跟「就」","example":"我从小就喜欢画画儿。","prompts":["你从小就喜欢做什么运动？","你从小就喜欢吃什么？喝什么？","你从小就喜欢看什么电视节目？","你从小就认识哪些朋友？"],"use":["认识"]},{"id":"sp5","type":"open","title":"说说你最要好的朋友","questions":["你最要好的朋友叫什么名字？他/她多大了？是哪国人？","他/她上几年级？在哪所学校读书？","他/她长什么样儿？","你们是怎么认识的？","你们现在经常一起逛街、看电影吗？","你们一般什么时候通电话？"],"use":["认识","皮肤","逛街","聊天儿","电邮","通"],"followups":["你们多久见一次面？","你们一起的时候都聊什么？","他/她的性格怎么样？"]},{"id":"sp6","type":"open","title":"朋友重要吗","questions":["你觉得朋友重要吗？为什么？","你觉得哪个朋友对你最好？","你不开心的时候会跟谁说？","有困难的时候，谁帮过你？"],"use":["重要","开心","困难"],"followups":["能举个例子吗？","那次你是怎么做的？"]}],"comp":[{"text":0,"q":"小琴是混血儿吗？","a":"是，她一半是美国人，一半是中国人。"},{"text":0,"q":"柳青和小琴是什么时候认识的？","a":"上小学的时候，从一年级起就坐在一起。"},{"text":0,"q":"小琴长什么样儿？","a":"跟柳青一样高，瘦瘦的，皮肤白白的，很爱笑。"},{"text":0,"q":"她们喜欢一起做什么？","a":"逛街、看电影、聊天儿。"},{"text":0,"q":"小琴现在在哪儿读书？","a":"在英国。"},{"text":0,"q":"她们什么时候见面？","a":"只有在假期里才能见面。"},{"text":1,"q":"周远和他是什么时候成为好朋友的？","a":"从小就是好朋友。"},{"text":1,"q":"他们在同一个学校上学吗？","a":"是，在同一个学校。"},{"text":1,"q":"他们冬天一起做什么？","a":"堆雪人、打雪仗。"},{"text":1,"q":"他们夏天一起做什么？","a":"去沙滩打球、滑水。"},{"text":1,"q":"他为什么觉得朋友重要？","a":"不开心的时候可以跟朋友聊一聊，有困难时朋友也可以帮忙。"}],"measure":[{"mw":"个","py":"gè","en":"general measure word","nouns":["朋友","电影","学校"]},{"mw":"位","py":"wèi","en":"polite, for people","nouns":["老师","摄影师","作家"]},{"mw":"本","py":"běn","en":"for books","nouns":["书","小说","本子"]},{"mw":"件","py":"jiàn","en":"for clothes and matters","nouns":["衬衫","毛衣","事"]},{"mw":"条","py":"tiáo","en":"for long thin things","nouns":["领带","裤子","河"]},{"mw":"辆","py":"liàng","en":"for vehicles","nouns":["自行车","车","出租车"]},{"mw":"顶","py":"dǐng","en":"for hats","nouns":["帽子"]},{"mw":"双","py":"shuāng","en":"for pairs","nouns":["运动鞋","筷子","手"]}],"listen":[]};
 
 /* 内容仓库：教材 → 课目录 → 每课的内容包与发布状态
    正式版住在服务器里，这里是同构的内存版 */
@@ -940,11 +1018,12 @@ function loadPack(tbId,no){
   Object.assign(SEG, p.seg||{});
   Object.entries(p.chars||{}).forEach(([c,v])=>{ CHAR[c]=CHAR[c]||v[0]; CG[c]=v[1]; });
   Object.entries(p.seg||{}).forEach(([sent,toks])=>toks.forEach(t2=>{
-    if(t2[0].length>1 && t2[3] && t2[3].length===t2[0].length) PY[t2[0]]=PY[t2[0]]||t2[3];
+    if(t2[0].length>1 && t2[3] && t2[3].length===t2[0].length) PY[t2[0]]=t2[3];   // 课程包说了算
   }));
   if(p.strokes) Object.assign(STROKES, p.strokes);
   TEXTS=p.text||[]; curPassage=0;
   EXTRA_WRITE=p.write||[];
+  SPEAK=p.speaking||[]; spkIdx=0;
   rebuildChars();
   document.getElementById('bigtitle').innerHTML=rubyStrict(META.title, L.title_py);
   if(!SHOW_DEMO_HINT) document.getElementById('demoHint')?.remove();
@@ -963,20 +1042,22 @@ showVoiceNote();
    L5 什么提示都没有  → 选词（全靠句子推） */
 const LEVELS=[
  {n:'—' ,t:'还没碰过'},
- {n:'L1',t:'在句中认词'},
- {n:'L2',t:'听音填词'},
- {n:'L3',t:'拼音填词'},
- {n:'L4',t:'看意思选词'},
- {n:'L5',t:'纯语境填词'},
- {n:'L6',t:'长期记住'},
+ {n:'L1',t:'听音辨义'},
+ {n:'L2',t:'听音选字'},
+ {n:'L3',t:'在句中认词'},
+ {n:'L4',t:'拼音填词'},
+ {n:'L5',t:'看意思选词'},
+ {n:'L6',t:'纯语境填词'},
+ {n:'L7',t:'长期记住'},
 ];
 const ASK={
- 1:'放大的这个词，是什么意思？',
- 2:'听到的词填进空里，是哪一个？',
- 3:'上面这个拼音，填进空里该写哪个词？',
- 4:'这个意思，填进空里是哪个词？',
- 5:'什么提示都没有了。空里该填哪个词？',
- 6:'隔了三周再看一次。空里该填哪个词？',
+ 1:'刚才听到的这个词，是什么意思？',
+ 2:'刚才听到的是哪个词？',
+ 3:'放大的这个词，是什么意思？',
+ 4:'上面这个拼音，填进空里该写哪个词？',
+ 5:'这个意思，填进空里是哪个词？',
+ 6:'什么提示都没有了。空里该填哪个词？',
+ 7:'隔了三周再看一次。空里该填哪个词？',
 };
 
 
@@ -1040,6 +1121,14 @@ function validatePack(p, tbId, lessonNo, others){
           if(!t[1]) push(E,'E25',`${tag}: 分词项 ${t[0]} 缺拼音`);
           if(!t[2]) push(W,'W25',`${tag}: 分词项 ${t[0]} 缺释义，悬停看不到意思`);
           if((t[3]||[]).length!==t[0].length) push(E,'E26',`${tag}: ${t[0]} 的逐字拼音数量不符`);
+          else{
+            [...t[0]].forEach((ch,i)=>{
+              if(HAN.test(ch)&&!t[3][i]&&(i===0||!t[3][i-1]))
+                push(E,'E27',`${tag}: ${t[0]} 里的「${ch}」没有拼音，也并不进前一个音节`);
+            });
+            if(t[0].length>1&&t[0].endsWith('儿')&&t[3][t[3].length-1]==='ér')
+              push(W,'W28',`${tag}: 「${t[0]}」的儿注成了独立音节 ér。儿化音要改（聊天儿→liáo/tiānr/空）；混血儿、女儿这种儿本来就是一个音节，忽略即可`);
+          }
         }
       });
     }
@@ -1378,7 +1467,7 @@ let ME=null, MENAME='', ROLE='student';
 let st={lv:{},log:[]};
 
 function blankState(){
-  const o={lv:{},due:{},reps:{},write:{},log:[]};
+  const o={lv:{},due:{},reps:{},write:{},speak:{},log:[]};
   WORDS.forEach(w=>{o.lv[w.id]=0;o.due[w.id]=0;o.reps[w.id]=0;});
   return o;
 }
@@ -1389,8 +1478,9 @@ function blankState(){
    所以"毕业"最少要跨 4 个日历天，不再是三分钟连答五次。
    正式版把 today() 换成真实日期，把 GAP 换成 FSRS 即可。
    ============================================================ */
-const MAXLV=6;                              // 顶级：长期记住
-const GAP={1:0, 2:0, 3:1, 4:3, 5:7, 6:21};  // 升到该级之后，隔几天再出现
+const MAXLV=7;                                    // 顶级：长期记住
+/* 同一天最多爬到 L3（听懂 + 认字），L4 以上必须隔夜 */
+const GAP={1:0, 2:0, 3:0, 4:1, 5:3, 6:7, 7:21};   // 升到该级之后，隔几天再出现
 const GAP_KEEP=60;                          // 已在 L6，再答对一次
 const NEW_PER_SESSION=10;               // 一次最多学几个新词
 
@@ -1423,13 +1513,14 @@ function startSession(kind){
   const src = kind==='review' ? dueList()
             : kind==='wrong' ? wrongList()
             : newList().slice(0,NEW_PER_SESSION);
-  if(!src.length) return;
+  if(!src.length) return false;
   session={kind, queue:shuffle(src.map(w=>w.id)), total:src.length, done:0,
            right:0, wrong:0, t0:Date.now()};
   firstQ=true;                    // 刚进来那一题不自动出声，别一点进来就响
   $('#sessName').textContent = kind==='review' ? '今天的复习' : kind==='wrong' ? '专攻错题' : '学新词';
   drawLadder(); renderQ(); drawBrowse(); drawData();
   selectTab('practice'); show('study');
+  return true;
 }
 
 /* 声音：优先真人质感的普通话嗓音，其次任意中文，都没有就提示。
@@ -1518,25 +1609,25 @@ function buildQ(){
   const tn=(w.tone||[]).slice(0,1);
   const lookalike=shuffle([w.hz,...tn,...w.near.slice(0,3-tn.length)]);
   let opts,ans=w.hz;
-  if(lv===1){opts=shuffle([w.en,...others.slice(0,3).map(x=>x.en)]);ans=w.en;}
-  else if(lv===3){opts=lookalike;}            // 只有 L3 用形近/音近干扰项
-  else{opts=shuffle([w.hz,...others.slice(0,3).map(x=>x.hz)]);}   // L2 L4 L5 L6 用本课其他词当干扰项
+  if(lv===1||lv===3){opts=shuffle([w.en,...others.slice(0,3).map(x=>x.en)]);ans=w.en;}  // 考意思
+  else if(lv===2||lv===4){opts=lookalike;}    // 听音选字、拼音选字：用形近音近干扰
+  else{opts=shuffle([w.hz,...others.slice(0,3).map(x=>x.hz)]);}   // L5 L6 L7 用本课其他词
   return {w,lv,opts,ans};
 }
 
 /* 舞台：词活在句子里。L1 放大，其余挖空 */
 function stageHTML(w,lv,done){
-  const showPy = PINYIN_ON && lv<5;          // L5 是毕业级，例句一律不注音
+  const showPy = PINYIN_ON && lv<6;          // L6 L7 是毕业级，例句一律不注音
   let cue,sentMode='blank';
   if(done){cue=`<div class="cue">${esc(w.py)} · <span class="cueen">${esc(w.en)}</span></div>`;sentMode='gloss';}
-  else if(lv===1){cue=`<div class="cue">${esc(w.py)}</div>`;sentMode='big';}
-  else if(lv===2){cue=`<div class="cue" style="color:var(--ink-3);opacity:.35">· · ·</div>`;}
-  else if(lv===3){cue=`<div class="cue">${esc(w.py)}</div>`;}
-  else if(lv===4){cue=`<div class="cue en">${esc(w.en)}</div>`;}
+  else if(lv===1||lv===2){cue=`<div class="cue" style="color:var(--ink-3);opacity:.35">· · ·</div>`;}
+  else if(lv===3){cue=`<div class="cue">${esc(w.py)}</div>`;sentMode='big';}
+  else if(lv===4){cue=`<div class="cue">${esc(w.py)}</div>`;}
+  else if(lv===5){cue=`<div class="cue en">${esc(w.en)}</div>`;}
   else{cue=`<div class="cue" style="color:var(--ink-3);opacity:.35">· · ·</div>`;}
-  // L3 L4 L5 的句子是挖空的，答完之前读整句等于念答案，所以不给播放键
-  const canHear = done || lv<=2;
-  const listenOnly = (lv===2 && !done);       // L2 未作答：声音就是题面
+  // 挖空的级别答完之前读整句等于念答案，所以不给播放键
+  const canHear = done || lv<=3;
+  const listenOnly = ((lv===1||lv===2) && !done);   // L1 L2 未作答：声音就是题面
   const icons = !canHear && !listenOnly ? '' :
     `<span class="spkbox">
        <button class="spkicon${listenOnly?' hero':''}" id="spk" aria-label="${listenOnly?'听一遍':'读这句话'}" title="${listenOnly?'听一遍':'读这句话'}">▶</button>
@@ -1544,7 +1635,9 @@ function stageHTML(w,lv,done){
      </span>`;
   return `<div class="stage">
       ${cue}
-      <div class="sentrow"><span class="sentline">${rubySent(w.sent,w.hz,sentMode,showPy)}</span>${icons}</div>
+      ${(!done&&lv===1)
+        ? `<div class="sentrow"><span class="sentline listenonly">先听，别看字</span>${icons}</div>`
+        : `<div class="sentrow"><span class="sentline">${rubySent(w.sent,w.hz,sentMode,showPy)}</span>${icons}</div>`}
       <div class="trline${done?'':' locked'}">${done?esc(w.tr):'&nbsp;'}</div>
     </div>`;
 }
@@ -1582,7 +1675,8 @@ function renderQ(){
   tShow=performance.now();
   // 刚进课程的第一题保持安静，别一点进来就响；之后每出一题照常
   if(firstQ) firstQ=false;
-  else if(lv<=2) sayAuto(w.sent);     // L1 L2 句子完整，直接读整句
+  else if(lv<=2) { if(!MUTED) sayWord(w); }   // L1 L2 是听力题，声音就是题面
+  else if(lv===3) sayAuto(w.sent);            // L3 第一次看到字，配整句
 }
 
 function classifyError(w,got){
@@ -1641,7 +1735,7 @@ function judge(got,unsure){
   const card=$('#qcard');
 
   // L1 答对就直接过：这一级只是认个面熟，不值得停下来讲一遍
-  if(lv===1 && ok && !drill && !unsure){
+  if((lv===1||lv===3) && ok && !drill && !unsure){
     document.querySelectorAll('.opt').forEach(b=>{
       b.disabled=true;
       if(b.dataset.v===ans) b.classList.add('right');
@@ -1685,7 +1779,7 @@ function judge(got,unsure){
   card.appendChild(row);
   $('#nextq').addEventListener('click',()=>{renderQ();drawLadder();});
   annotate(row);
-  if(!MUTED){ (lv===2||lv===3) ? sayWord(w) : say(w.sent); }   // L2 L3 练的是词音对应，只读词
+  if(!MUTED){ (lv<=2||lv===4) ? sayWord(w) : say(w.sent); }   // 听力题和拼音题只读词
   drawLadder(w.id);drawData();
 }
 
@@ -1819,6 +1913,137 @@ function stopRead(){
   highlight(-1);
 }
 
+/* ============================================================
+   口语 —— 课本的 Speaking practice 和 Activity
+   机器判不了对错，判断权在老师手上：会了 / 再练。
+   标记进作答记录，跟词汇错题本并列，这是目前唯一能记下口语的通道。
+   ============================================================ */
+let SPEAK=[], spkIdx=0, spkHints=true, spkFocus=false, spkQ=0;
+
+/* 朗读前把省略号和「他/她」这类写法清掉，不然合成音会念出来 */
+const spkSay = t => say(t.replace(/……|\.{3,}/g,'').replace(/他\/她/g,'他').replace(/\s+/g,'').trim());
+const spkItems = x => x.prompts||x.questions||[];
+
+/* 句型词标出来，结构才跳得出来 */
+function spkLine(t, point){
+  const keys=(point||'').split(/……|\s*\/\s*/).map(k=>k.trim()).filter(Boolean);
+  let h=rubySent(t,'','',false);
+  keys.forEach(k=>{ if(k) h=h.split(k).join(`<b class="pk">${k}</b>`); });
+  return h;
+}
+
+function drawSpeak(){
+  if(!SPEAK.length){ $('#spkList').innerHTML=''; $('#spkCard').innerHTML='<p class="bk">这一课还没有导入口语题。</p>'; return; }
+  spkIdx=Math.max(0,Math.min(spkIdx,SPEAK.length-1));
+  $('#spkList').innerHTML=SPEAK.map((x,i)=>
+    `<button class="spkchip${i===spkIdx?' on':''}" data-si="${i}">${esc(x.point||x.title||('第'+(i+1)+'组'))}</button>`).join('');
+  $('#spkList').querySelectorAll('.spkchip').forEach(b=>b.addEventListener('click',()=>{
+    spkIdx=+b.dataset.si; spkQ=0; drawSpeak(); }));
+  spkFocus ? drawSpkFocus() : drawSpkList();
+  annotate($('#spkCard')); annotate($('#spkList'));
+}
+
+/* 列表：备课时看全貌 */
+function drawSpkList(){
+  const x=SPEAK[spkIdx], items=spkItems(x), isPat=x.type==='pattern';
+  $('#spkCard').innerHTML=`
+    <div class="spkhead"><h3>${esc(x.point||x.title||'')}</h3>
+      <span class="kind">${isPat?'句型替换':'开放问答'}</span></div>
+    ${x.note?`<p class="spknote">${esc(x.note)}</p>`:''}
+    ${x.example?`<div class="spkeg"><span class="lbl">课本例句</span>
+      <div class="egrow"><span class="egtxt">${spkLine(x.example,x.point)}</span>
+        <button class="spkicon" data-play="${esc(x.example)}" aria-label="朗读">▶</button></div></div>`:''}
+    ${items.map((q,i)=>`<div class="qrow" data-qi="${i}">
+        <span class="qno">${i+1}</span>
+        <span class="qtxt">${spkLine(q,x.point)}</span>
+        <button class="spkicon" data-play="${esc(q)}" aria-label="朗读">▶</button>
+      </div>`).join('')}
+    ${spkHints?hintsHTML(x):''}
+    <div class="spkfoot">
+      <span class="cnt">第 ${spkIdx+1} / ${SPEAK.length} 组 · ${items.length} 句</span>
+      <span style="display:flex;gap:8px">
+        <button class="mini-btn" id="spkPrev">← 上一组</button>
+        <button class="mini-btn go" id="spkNext">下一组 →</button>
+      </span>
+    </div>`;
+  wireSpk();
+  // 先听后说：换到一组就先把课本例句念一遍
+  if(x.example && !MUTED) setTimeout(()=>spkSay(x.example), 250);
+  $('#spkCard').querySelectorAll('.qrow').forEach(r=>r.addEventListener('click',e=>{
+    if(e.target.closest('button,.wd'))return;
+    spkQ=+r.dataset.qi; spkFocus=true; drawSpeak(); syncFocusBtn();
+  }));
+}
+
+/* 专注：上课时一次只看一句，两边屏幕对得齐 */
+function drawSpkFocus(){
+  const x=SPEAK[spkIdx], items=spkItems(x);
+  spkQ=Math.max(0,Math.min(spkQ,items.length-1));
+  const q=items[spkQ];
+  $('#spkCard').innerHTML=`
+    <div class="focus">
+      <div class="fhead">${esc(x.point||x.title||'')}</div>
+      ${x.example?`<div class="feg"><span class="egtxt">${spkLine(x.example,x.point)}</span>
+        <button class="spkicon" data-play="${esc(x.example)}" aria-label="听例句">▶</button></div>`:''}
+      <div class="fq">${spkLine(q,x.point)}</div>
+      <button class="playbig2" data-play="${esc(q)}" aria-label="朗读这一句">▶</button>
+      <div class="fnav">
+        <button class="arrow" id="fPrev" aria-label="上一句">‹</button>
+        <span class="fidx">${spkQ+1} / ${items.length}</span>
+        <button class="arrow" id="fNext" aria-label="下一句">›</button>
+      </div>
+    </div>
+    ${spkHints?hintsHTML(x):''}`;
+  wireSpk();
+  $('#fPrev').disabled = spkIdx===0 && spkQ===0;
+  $('#fNext').disabled = spkIdx===SPEAK.length-1 && spkQ===items.length-1;
+  $('#fPrev').addEventListener('click',()=>stepSpk(-1));
+  $('#fNext').addEventListener('click',()=>stepSpk(1));
+  if(!MUTED) setTimeout(()=>spkSay(q), 260);      // 先听再说
+}
+
+/* 走到组尾自动进下一组 */
+function stepSpk(d){
+  const items=spkItems(SPEAK[spkIdx]);
+  if(d>0){
+    if(spkQ<items.length-1) spkQ++;
+    else if(spkIdx<SPEAK.length-1){ spkIdx++; spkQ=0; }
+    else return;
+  }else{
+    if(spkQ>0) spkQ--;
+    else if(spkIdx>0){ spkIdx--; spkQ=spkItems(SPEAK[spkIdx]).length-1; }
+    else return;
+  }
+  drawSpeak();
+}
+
+function wireSpk(){
+  $('#spkCard').querySelectorAll('[data-play]').forEach(b=>
+    b.addEventListener('click',e=>{ e.stopPropagation(); spkSay(b.dataset.play); }));
+  $('#spkPrev')?.addEventListener('click',()=>{ if(spkIdx>0){spkIdx--;spkQ=0;drawSpeak();} });
+  $('#spkNext')?.addEventListener('click',()=>{ if(spkIdx<SPEAK.length-1){spkIdx++;spkQ=0;drawSpeak();} });
+}
+function syncFocusBtn(){
+  const b=$('#spkFocusBtn'); if(!b)return;
+  b.classList.toggle('on',spkFocus);
+  b.textContent = spkFocus ? '列表模式' : '专注模式';
+}
+
+/* 老师那一侧才看得到的备课信息 */
+function hintsHTML(x){
+  const words=(x.use||[]).map(hz=>{
+    const w=WORDS.find(y=>y.hz===hz);
+    return `<span class="wtag" title="${esc(w?w.en:'')}">${esc(hz)}</span>`;
+  }).join('');
+  return `<div class="hints">
+    <h4>老师提示</h4>
+    ${x.point?`<p class="hl">练的句型：<b>${esc(x.point)}</b></p>`:''}
+    ${words?`<p class="hl">引导用上这些词：<br>${words}</p>`:''}
+    ${(x.followups||[]).length?`<p class="hl">可以追问：${x.followups.map(f=>esc(f)).join(' ／ ')}</p>`:''}
+    <p class="hl" style="color:var(--ink-3);font-size:12px">点 ▶ 听发音；把鼠标停在词上（平板长按）看拼音和意思。</p>
+  </div>`;
+}
+
 /* ---------------- 学习 ---------------- */
 function drawBrowse(){
   const g=$('#wordgrid');
@@ -1846,7 +2071,8 @@ function drawBrowse(){
 const WRITERS={};
 function gridsFor(w){
   return [...w.hz].map((c,i)=>{
-    const p=(PY[w.hz]&&PY[w.hz][i])||CHAR[c]||'';
+    // 词的注音表里留空 = 儿化音并进了前一个字，格子上就不标
+    const p = PY[w.hz] ? (PY[w.hz][i]||'') : (CHAR[c]||'');
     const key=w.id+'-'+i;
     return `<div class="cell"><div class="cpy">${p}</div>
       <div class="tzg" id="tzg-${key}" data-k="${key}" data-c="${c}" title="点这个格子，只写这个字"></div></div>`;
@@ -1897,8 +2123,9 @@ function rebuildChars(){
     if(!chars.length)return;
     GROUPS.push({hz,py,en,parts:parts||[],chars});
   };
-  (EXTRA_WRITE||[]).forEach(g=>push(g.hz,g.py,g.en,g.parts));
-  WORDS.forEach(w=>push(w.hz,w.py,w.en,w.parts));
+  (EXTRA_WRITE||[]).forEach(g=>push(g.hz,g.py,g.en,g.parts));   // 学校布置的听写，不设门槛
+  // 读到的再写：这个词要先在阶梯上爬到 L3（看字能认意思）才进写字队列
+  WORDS.filter(w=>(st.lv&&st.lv[w.id]>=3)).forEach(w=>push(w.hz,w.py,w.en,w.parts));
   // 单字进度仍按字记，一个字在多个词里出现只算一次
   const seen=new Set();
   GROUPS.forEach(g=>g.chars.forEach(c=>{ if(!seen.has(c)){ seen.add(c); CHARS.push({c,gloss:CG[c]||''}); }}));
@@ -1922,7 +2149,16 @@ function curGroup(){ return GROUPS[gIdx]; }
 function curChar(){ return curGroup()?.chars[cIdx]; }
 
 function drawWrite(){
-  if(!GROUPS.length){ $('#wstat').textContent=''; $('#bigtzg').innerHTML=''; return; }
+  rebuildChars();                       // 阶梯在动，写字清单跟着长
+  if(!GROUPS.length){
+    $('#wstat').textContent='';
+    $('#wpy').innerHTML=''; $('#wsrc').innerHTML=''; $('#charstrip').innerHTML='';
+    $('#bigtzg').innerHTML='';
+    $('#wfeed').className='wfeed';
+    $('#wfeed').innerHTML='先去练习页把词认熟，认得出的字才会出现在这里。';
+    annotate($('#wfeed'));
+    return;
+  }
   gIdx=Math.max(0,Math.min(gIdx,GROUPS.length-1));
   const g=curGroup();
   cIdx=Math.max(0,Math.min(cIdx,g.chars.length-1));
@@ -2674,6 +2910,15 @@ async function openLesson(go,tbId,no){
   if(tbId!==undefined&&tbId!==null){ if(!loadPack(tbId,no)) return; }
   if(!LESSON_ID) return;
   st=await API.loadProgress(ME,LESSON_ID);
+  rebuildChars();
+  // 这一课一个词都没碰过，先听课文 —— 听到的再说，说到的再读
+  const fresh = !go && WORDS.every(w=>!(st.lv[w.id]>0));
+  if(fresh){
+    session=null; $('#sessName').textContent='先听课文';
+    drawLadder();drawBrowse();drawData();show('study');
+    selectTab('text'); drawText();
+    return;
+  }
   if(go==='write'){
     session={kind:'write',queue:[],total:0,done:0,right:0,wrong:0,t0:Date.now()};
     $('#sessName').textContent='写字';
@@ -2723,6 +2968,7 @@ document.addEventListener('click',e=>{
     document.querySelectorAll('.mbtn').forEach(x=>x.classList.toggle('on',x===mb));
     wMode=mb.dataset.m; drawWrite(); return;
   }
+  if(t.closest('#spkFocusBtn')){ spkFocus=!spkFocus; spkQ=0; drawSpeak(); syncFocusBtn(); return; }
   if(t.closest('#txtPlay')){ playing ? pauseRead() : playFrom(playIdx<0?0:playIdx); return; }
   if(t.closest('#pyBtn')){
     PINYIN_ON=!PINYIN_ON;
@@ -2741,15 +2987,26 @@ document.addEventListener('click',e=>{
   const tab=t.closest('.tab');
   if(tab){
     selectTab(tab.dataset.p);
+    // 从课文切到练习时，会话可能还没建（第一次进课直接落在课文）
+    if(tab.dataset.p==='practice' && !session){
+      if(!startSession(newList().length ? 'new' : 'review')){
+        $('#qcard').innerHTML=`<div class="finish">
+          <p class="big">这一课今天没有要练的了</p>
+          <p class="tip">词都在排队等以后复习。去课文页多听几遍吧。</p></div>`;
+        annotate($('#qcard'));
+      }
+    }
     if(tab.dataset.p!=='text') stopRead();
     else if('speechSynthesis' in window) speechSynthesis.cancel();  // 掐掉练习页还在读的例句
     if(tab.dataset.p==='text')  drawText();
+    if(tab.dataset.p==='speak') drawSpeak();
     if(tab.dataset.p==='browse')drawBrowse();
     if(tab.dataset.p==='write')drawWrite();
     if(tab.dataset.p==='data')drawData();
   }
 });
 document.addEventListener('change',e=>{
+  if(e.target.id==='spkHints'){ spkHints=e.target.checked; drawSpeak(); }
   if(e.target.id==='txtRate'){ rate=+e.target.value; if(playing){const i=playIdx;stopRead();playFrom(i);} }
   if(e.target.id==='voiceSel'){ voice=zhVoices[+e.target.value]||voice; say('你好'); }
 });
