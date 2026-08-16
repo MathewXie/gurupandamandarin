@@ -181,6 +181,10 @@ header{padding:34px 0 20px}
 .sen.now{background:#FAF4F3;box-shadow:0 0 0 3px #FAF4F3}
 .ch{font-style:normal;display:inline;transition:color .1s linear}
 .ch.read,.ch.at{color:var(--zhu)}
+.sentline .ch.read,.sentline .ch.at{color:var(--zhu)}
+.sentline .blank.at{background:var(--zhu);color:#fff;border-radius:3px;
+  animation:blankpulse .5s ease-out}
+@keyframes blankpulse{0%{transform:scale(1)}45%{transform:scale(1.12)}100%{transform:scale(1)}}
 .ptip{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin:18px 0 0;padding-top:14px;border-top:1px dashed var(--rule)}
 
 /* ---------- 口语 ---------- */
@@ -683,7 +687,7 @@ header{padding:34px 0 20px}
 <div class="topbar">
   <div class="brandbar"><span class="bp">🐼</span><span class="bn">熊猫老师</span><span class="be">Guru Panda</span></div>
   <div class="me" id="me-s"></div>
-  <div class="tb-btns"><span class="tb" id="sessName" style="border-style:dashed;cursor:default"></span><span id="voiceBox"></span><button class="tb" id="pyBtn">拼音 开</button><button class="tb" id="muteBtn">🔊 自动朗读</button><button class="tb" id="backBtn">← 首页</button></div>
+  <div class="tb-btns"><span class="tb" id="sessName" style="border-style:dashed;cursor:default"></span><span id="voiceBox"></span><button class="tb" id="pyBtn">拼音 关</button><button class="tb" id="muteBtn">🔊 自动朗读</button><button class="tb" id="backBtn">← 首页</button></div>
 </div>
 
 <header>
@@ -897,7 +901,7 @@ const wdCell=(txt,wpy,gloss,chars,extra='')=>{
 };
 
 /* 练习句子的注音开关。关掉之后孩子必须看汉字，需要时点一下才给拼音 */
-let PINYIN_ON=true;
+let PINYIN_ON=false;     // 默认不注音：练习句子跟课文一致，要读音就点那个词
 
 /* 课文专用：不注音，但每个字包一层，好做逐字高亮 */
 function karaokeSent(sent){
@@ -915,11 +919,26 @@ function karaokeSent(sent){
 function rubySent(sent,word,mode,showPy=true){
   const segs=SEG[sent];
   if(!segs) return ruby(sent);
+  let pos=0;                                  // 字符位置，逐字高亮要用
   const cell=(txt,wpy,gloss,chars,extra='')=>{
-    const inner=showPy
-      ? rbRun([...txt].map((c,i)=>[c,chars[i]||'']))
-      : esc(txt);
-    if(!wpy) return esc(txt);
+    let inner;
+    if(showPy){
+      // 注音模式下按音节分组，位置记在整组上
+      const groups=[];
+      [...txt].forEach((c,i)=>{
+        const p=chars[i]||'';
+        if(isHan(c)&&!p&&groups.length&&groups[groups.length-1].p){
+          groups[groups.length-1].t+=c; groups[groups.length-1].len++;
+        } else groups.push({t:c,p,at:pos+i,len:1});
+      });
+      inner=groups.map(g=>g.p
+        ? `<span class="ch" data-ci="${g.at}" data-cilen="${g.len}"><ruby>${esc(g.t)}<rt>${g.p}</rt></ruby></span>`
+        : `<span class="ch" data-ci="${g.at}">${esc(g.t)}</span>`).join('');
+    }else{
+      inner=[...txt].map((c,i)=>`<span class="ch" data-ci="${pos+i}">${esc(c)}</span>`).join('');
+    }
+    pos+=txt.length;
+    if(!wpy) return inner;
     const en = extra.includes('big') ? '' : esc(gloss||'');
     return `<span class="wd${extra?' '+extra:''}" data-py="${wpy}" data-en="${en}">${inner}</span>`;
   };
@@ -927,8 +946,9 @@ function rubySent(sent,word,mode,showPy=true){
   return segs.map(([txt,wpy,gloss,chars])=>{
     if(!hitDone && txt===word){
       hitDone=true;
-      if(mode==='blank') return `<span class="blank">？</span>`;
-      if(mode==='gloss') return glossCols(word);
+      if(mode==='blank'){ const at=pos; pos+=txt.length;
+        return `<span class="blank" data-ci="${at}" data-cilen="${txt.length}">？</span>`; }
+      if(mode==='gloss'){ pos+=txt.length; return glossCols(word); }
       if(mode==='big')   return cell(txt,wpy,gloss,chars,'big');
     }
     return cell(txt,wpy,gloss,chars);
@@ -1026,6 +1046,8 @@ function loadPack(tbId,no){
   SPEAK=p.speaking||[]; spkIdx=0;
   rebuildChars();
   document.getElementById('bigtitle').innerHTML=rubyStrict(META.title, L.title_py);
+  const pb=document.getElementById('pyBtn');
+  if(pb){ pb.textContent=PINYIN_ON?'拼音 开':'拼音 关'; pb.style.color=PINYIN_ON?'':'var(--zhu)'; }
   if(!SHOW_DEMO_HINT) document.getElementById('demoHint')?.remove();
 showVoiceNote();
   document.querySelector('.title .en').textContent=META.title_en;
@@ -1668,17 +1690,22 @@ function renderQ(){
     <div class="opts">${opts.map(o=>`<button class="opt" data-v="${esc(o)}">${lv===1?esc(o):`<span class="hz">${esc(o)}</span>`}</button>`).join('')}</div>
     <div class="unsure"><button class="unsurebtn" id="dunno">不确定，跳过</button>
       <span class="unsurehint">猜对了也记不住。点这个不扣级别，一会儿再考你一次。</span></div>`;
-  $('#spk')?.addEventListener('click',()=>say(w.sent));
+  $('#spk')?.addEventListener('click',()=>sayPracticeSent(w));
   document.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>judge(b.dataset.v)));
   $('#dunno')?.addEventListener('click',()=>judge(null,true));
   annotate($('.ask'));annotate($('.q-meta'));annotate($('.trline'));
   tShow=performance.now();
   // 刚进课程的第一题保持安静，别一点进来就响；之后每出一题照常
   if(firstQ) firstQ=false;
-  else if(lv<=2) { if(!MUTED) sayWord(w); }   // L1 L2 是听力题，声音就是题面
-  else if(lv===3) sayAuto(w.sent);            // L3 第一次看到字，配整句
+  else if(lv===1){ if(!MUTED) sayWord(w); }                    // L1 纯听词，句子还没露面
+  else if(lv===2){ if(!MUTED) sayPracticeSent(w); }            // L2 在句子里抓缺的那个词
+  else if(lv===3){ if(!MUTED) sayPracticeSent(w); }            // L3 第一次看到字，配整句
 }
 
+/* 念练习句子，句子里的字逐个亮；读到挖空处空格闪 */
+function sayPracticeSent(w){
+  kSpeak(w.sent, $('#qcard .sentline'), 0.72, ()=>kClear());
+}
 function classifyError(w,got){
   if(!got)return '未作答';
   if((w.tone||[]).includes(got))return '声调错误';
@@ -1747,7 +1774,7 @@ function judge(got,unsure){
   }
 
   card.querySelector('.stage').outerHTML=stageHTML(w,lv,true);
-  $('#spk')?.addEventListener('click',()=>say(w.sent));
+  $('#spk')?.addEventListener('click',()=>sayPracticeSent(w));
   $('#spkw')?.addEventListener('click',()=>sayWord(w));
 
   document.querySelectorAll('.opt').forEach(b=>{b.disabled=true;
@@ -1779,7 +1806,7 @@ function judge(got,unsure){
   card.appendChild(row);
   $('#nextq').addEventListener('click',()=>{renderQ();drawLadder();});
   annotate(row);
-  if(!MUTED){ (lv<=2||lv===4) ? sayWord(w) : say(w.sent); }   // 听力题和拼音题只读词
+  if(!MUTED){ (lv<=2||lv===4) ? sayWord(w) : sayPracticeSent(w); }   // 听力题和拼音题只读词
   drawLadder(w.id);drawData();
 }
 
@@ -1835,61 +1862,68 @@ document.addEventListener('touchstart',e=>{
 ['touchend','touchmove','touchcancel'].forEach(ev=>
   document.addEventListener(ev,()=>{ clearTimeout(pressTimer); },{passive:true}));
 
-let curSen=null, estTimer=null, gotBoundary=false;
-
-function highlight(i){
-  $('#passage')?.querySelectorAll('.sen').forEach(el=>el.classList.toggle('now',+el.dataset.s===i));
-  curSen = i>=0 ? $(`#passage .sen[data-s="${i}"]`) : null;
-  clearMarks();
+/* ============================================================
+   逐字高亮（课文和练习共用）
+   带 data-ci 的元素按字符位置亮起来；data-cilen 让挖空能跨多个字
+   ============================================================ */
+let kRoot=null, kTimer=null, kGot=false;
+function kClear(){
+  clearInterval(kTimer); kTimer=null;
+  kRoot?.querySelectorAll('.read,.at').forEach(x=>x.classList.remove('read','at'));
 }
-function clearMarks(){
-  clearInterval(estTimer); estTimer=null;
-  $('#passage')?.querySelectorAll('.ch.read,.ch.at').forEach(c=>c.classList.remove('read','at'));
-}
-/* cursor = 已读到的字符下标；len = 当前正在读的字数 */
-function mark(cursor,len){
-  if(!curSen)return;
-  curSen.querySelectorAll('.ch').forEach(c=>{
-    const k=+c.dataset.ci;
-    c.classList.toggle('read', k<cursor+len);
-    c.classList.toggle('at',   k>=cursor && k<cursor+len);
+function kMark(cursor,len){
+  if(!kRoot)return;
+  kRoot.querySelectorAll('[data-ci]').forEach(el=>{
+    const a=+el.dataset.ci, b=a+(+el.dataset.cilen||1);
+    el.classList.toggle('read', a<cursor+len);
+    el.classList.toggle('at',   b>cursor && a<cursor+len);
   });
 }
 /* Safari 一类不发 boundary 事件的浏览器，用估算的节奏兜底 */
-function startEstimate(text){
-  clearInterval(estTimer);
+function kEstimate(text,r){
+  clearInterval(kTimer);
   const idx=[...text].map((c,i)=>/[\u4e00-\u9fff]/.test(c)?i:-1).filter(i=>i>=0);
   let k=0;
-  const ms=Math.max(120, Math.round(250/Math.max(.4,rate)));
-  estTimer=setInterval(()=>{
-    if(gotBoundary){ clearInterval(estTimer); estTimer=null; return; }
-    if(k>=idx.length){ clearInterval(estTimer); estTimer=null; return; }
-    mark(idx[k],1); k++;
+  const ms=Math.max(120, Math.round(250/Math.max(.4,r)));
+  kTimer=setInterval(()=>{
+    if(kGot||k>=idx.length){ clearInterval(kTimer); kTimer=null; return; }
+    kMark(idx[k],1); k++;
   }, ms);
 }
-function speakSen(i,onEnd){
-  if(!('speechSynthesis' in window)||!SENS[i]) { onEnd&&onEnd(); return; }
+/* 念一段文字并逐字点亮 root 里的字 */
+function kSpeak(text, root, r, onEnd){
+  kClear(); kRoot=root||null; kGot=false;
+  if(!('speechSynthesis' in window)||!text){ onEnd&&onEnd(); return; }
   speechSynthesis.cancel();
-  const text=SENS[i];
   const u=new SpeechSynthesisUtterance(text);
-  u.lang='zh-CN'; u.rate=rate; u.pitch=1.05; if(voice)u.voice=voice;
-  gotBoundary=false;
-  // Chrome Edge 会发 boundary，位置准；Safari 多半不发，靠上面的估算兜底
+  u.lang='zh-CN'; u.rate=r; u.pitch=1.05; if(voice)u.voice=voice;
   u.onboundary=e=>{
     if(typeof e.charIndex!=='number')return;
-    gotBoundary=true; clearInterval(estTimer); estTimer=null;
-    mark(e.charIndex, e.charLength||1);
+    kGot=true; clearInterval(kTimer); kTimer=null;
+    kMark(e.charIndex, e.charLength||1);
   };
-  const done=()=>{ clearInterval(estTimer); estTimer=null; onEnd&&onEnd(); };
+  const done=()=>{ clearInterval(kTimer); kTimer=null; onEnd&&onEnd(); };
   u.onend=done; u.onerror=done;
   speechSynthesis.speak(u);
-  startEstimate(text);
+  kEstimate(text,r);
 }
+
+let curSen=null;
+function highlight(i){
+  $('#passage')?.querySelectorAll('.sen').forEach(el=>el.classList.toggle('now',+el.dataset.s===i));
+  curSen = i>=0 ? $(`#passage .sen[data-s="${i}"]`) : null;
+  kClear();
+}
+function speakSen(i,onEnd){
+  if(!SENS[i]){ onEnd&&onEnd(); return; }
+  kSpeak(SENS[i], curSen, rate, onEnd);
+}
+
 function readOne(i){
-  pauseRead(); clearMarks();
+  pauseRead(); kClear();
   playIdx=i;                       // 点过哪句，按播放就从那句继续
   highlight(i);
-  speakSen(i,()=>{ if(!playing){ clearMarks(); highlight(-1); } });
+  speakSen(i,()=>{ if(!playing){ kClear(); highlight(-1); } });
 }
 function playFrom(i){
   if(i>=SENS.length){ stopRead(); return; }   // 读完整篇才归零
@@ -1901,7 +1935,7 @@ function playFrom(i){
 /* 暂停：停声音但记住读到哪一句，再按继续 */
 function pauseRead(){
   playing=false;
-  clearInterval(estTimer); estTimer=null;
+  clearInterval(kTimer); kTimer=null;
   if('speechSynthesis' in window) speechSynthesis.cancel();
   const b=$('#txtPlay'); if(b){ b.textContent='▶'; b.classList.remove('on'); }
 }
@@ -1909,7 +1943,7 @@ function pauseRead(){
 function stopRead(){
   pauseRead();
   playIdx=-1;
-  clearMarks();
+  kClear();
   highlight(-1);
 }
 
