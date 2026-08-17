@@ -295,6 +295,7 @@ body.noanim .pfill{transition:none}
 .line.hit{background:var(--qing-soft);box-shadow:0 0 0 2px var(--qing-soft)}
 
 /* ---------- 学习 ---------- */
+.hint-bar.warn{border-color:var(--zhu);background:var(--zhu-soft);color:var(--ink)}
 .hint-bar{font-family:var(--han);font-size:13px;color:var(--ink-2);background:var(--panel);
   border:1px solid var(--rule);border-left:2px solid var(--zhu);padding:11px 15px;margin:0 0 14px;border-radius:0 var(--r) var(--r) 0}
 .wordgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
@@ -758,6 +759,7 @@ body.sidehide .sidetog::before{content:'›'}
 .gearbox .grow{display:flex;align-items:center;gap:10px;font-family:var(--han);font-size:13px;
   color:var(--ink-2);margin:0 0 8px;flex-wrap:wrap}
 .gearbox .grow:last-child{margin-bottom:0}
+.vtres{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
 .tab.mine{margin-left:auto;color:var(--ink-3)}
 
 /* ---------- 今天 ---------- */
@@ -963,6 +965,8 @@ body.sidehide .sidetog::before{content:'›'}
   <div class="gearbox" id="gearBox">
     <p class="gt">这台设备</p>
     <label class="grow">发音<span id="voiceBox"></span></label>
+    <label class="grow">试一下<button class="tb" id="voiceTest">▶ 你好</button>
+      <span class="vtres" id="vtRes"></span></label>
     <label class="grow">语速
       <span class="seg" id="rateSeg">
         <button data-r="0.42">很慢</button><button data-r="0.58" class="on">慢</button><button data-r="0.8">正常</button>
@@ -980,7 +984,7 @@ body.sidehide .sidetog::before{content:'›'}
 </aside>
 <div class="main">
   <button class="sidetog" id="sideTog" title="收起／展开左栏" aria-label="收起左栏">‹</button>
-  <p class="hint-bar" id="voiceNote" style="display:none">
+  <p class="hint-bar warn" id="voiceNote" style="display:none">
     这台设备没装中文语音，发音暂时读不出来。可以在系统设置里加一个中文语音包；
     或者由老师给生词录真人发音，效果比合成音好得多。
   </p>
@@ -1997,11 +2001,36 @@ function drawVoiceSel(){
   box.innerHTML=`<select class="fsel tbsel" id="voiceSel" title="换一个嗓音">${
     zhVoices.map((v,i)=>`<option value="${i}"${v===voice?' selected':''}>${esc(v.name.replace(/\s*\(.*?\)/,''))}</option>`).join('')}</select>`;
 }
-function showVoiceNote(){
+function showVoiceNote(msg){
   const el=document.getElementById('voiceNote'); if(!el)return;
+  if(msg){ el.innerHTML=esc(msg); el.style.display=''; return; }
   el.style.display = VOICE_OK ? 'none' : '';
 }
-if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;setTimeout(pickVoice,600);}
+/* 朗读失败：停下来说清楚，不要装作读完了继续往下跑 */
+const FAIL_MSG={
+  'not-allowed':'浏览器拦住了朗读。先点一下页面上任意位置，再按播放。',
+  'no-start'   :'朗读没有发出声音。多半是这台设备没装中文语音包，或者浏览器把声音静音了。',
+  'synthesis-failed':'语音合成失败了。换一个嗓音试试，或者换个浏览器。',
+  'audio-busy' :'另一个程序正在占用声音。关掉别的播放再试。',
+  'language-unavailable':'这台设备没有中文语音。要在系统设置里加一个中文语音包。',
+  'voice-unavailable':'选中的嗓音用不了，换一个试试。',
+};
+function speechFail(reason){
+  if(typeof playing!=='undefined' && playing) pauseRead();
+  kClear();
+  const extra = zhVoices.length ? '' : '（这台设备一个中文嗓音都没找到）';
+  showVoiceNote((FAIL_MSG[reason]||('朗读出错：'+reason))+extra);
+  console.warn('[朗读失败]', reason, '可用中文嗓音:', zhVoices.map(v=>v.name));
+}
+function speechOK(){
+  const el=document.getElementById('voiceNote');
+  if(el && VOICE_OK) el.style.display='none';
+}
+if('speechSynthesis' in window){
+  pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,600);
+  // Chrome 念超过约 15 秒会自行暂停，定时 resume 顶住
+  setInterval(()=>{ if(speechSynthesis.speaking && !speechSynthesis.paused) speechSynthesis.resume(); }, 8000);
+}
 let MUTED=false;
 /* 发音修正表：显示归显示，念归念。
    合成器读错的地方（最常见的是儿化音被念成独立的 ér）在这里替换。
@@ -2380,9 +2409,15 @@ function kSpeak(text, root, r, onEnd){
     kGot=true; clearInterval(kTimer); kTimer=null;
     kMark(e.charIndex, e.charLength||1);
   };
-  const done=()=>{ if(my!==kSeq)return; clearInterval(kTimer); kTimer=null; onEnd&&onEnd(); };
-  u.onend=done; u.onerror=done;
+  let started=false, watchdog=null;
+  const stopAll=()=>{ clearInterval(kTimer); kTimer=null; clearTimeout(watchdog); };
+  u.onstart=()=>{ started=true; clearTimeout(watchdog); speechOK(); };
+  u.onend=()=>{ if(my!==kSeq)return; stopAll(); onEnd&&onEnd(); };
+  // 出错不能当成"读完了" —— 那样会一句接一句地空转，整篇瞬间跑完还没声音
+  u.onerror=e=>{ if(my!==kSeq)return; stopAll(); speechFail(e&&e.error||'error'); };
   speechSynthesis.speak(u);
+  // 看门狗：说好要念，1.2 秒还没开口，就是没发出来
+  watchdog=setTimeout(()=>{ if(!started && my===kSeq) speechFail('no-start'); }, 1200);
   kEstimate(text,r,my);       // 高亮按原文走，替换只影响念出来的声音
 }
 
@@ -3741,6 +3776,19 @@ document.addEventListener('click',e=>{
   if(mwb){ mwMode=mwb.dataset.m;
     $('#mwMode').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===mwb));
     drawMW(); return; }
+  if(t.closest('#voiceTest')){
+    const box=$('#vtRes'); if(box) box.textContent='…';
+    if(!('speechSynthesis' in window)){ if(box) box.textContent='这个浏览器不支持朗读'; return; }
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance('你好'); u.lang='zh-CN'; if(voice)u.voice=voice;
+    let ok=false;
+    u.onstart=()=>{ ok=true; if(box) box.textContent='✓ 出声了'; };
+    u.onerror=e=>{ if(box) box.textContent='✗ '+((e&&e.error)||'出错'); };
+    speechSynthesis.speak(u);
+    setTimeout(()=>{ if(!ok && box && box.textContent==='…')
+      box.textContent = zhVoices.length ? '✗ 没出声（嗓音有 '+zhVoices.length+' 个）' : '✗ 没有中文嗓音'; }, 1400);
+    return;
+  }
   if(t.closest('#gearBtn')){ $('#gearBox').classList.toggle('on'); return; }
   const rseg=t.closest('#rateSeg button');
   if(rseg){ RATE=+rseg.dataset.r;
